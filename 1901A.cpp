@@ -7,18 +7,25 @@ int main() {
     int t;
     cin >> t;
     while(t--){
-        int n, k;
-        cin >> n >> k;
+        int n; cin >> n;
+        string s;
+        cin >> s;
+        
+        int dot = 0;
 
-        vi v(n);
-        for(int &i : v) cin >> i;
-
-        int mx = v[0];
-        mx = max(mx, (k - v[n-1]) * 2);
-
-        for(int i = 1; i < n; i++){
-            mx = max(mx, v[i] - v[i-1]);
+        for(int i = 0; i < n; i++) {
+            if(s[i] == '.') dot++; 
         }
-        cout << mx << endl;
+        bool flag = false;
+
+        for(int i = 0; i < n-2; i++){
+            if(s.substr(i,3) == "..."){
+                flag = true;
+                break;
+            }
+        }
+
+        if(flag) cout << 2 << endl;
+        else cout << dot << endl;
     }
 }
