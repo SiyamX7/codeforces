@@ -12,18 +12,15 @@ using namespace std;
 
 int main() {
     fast;
-    int t;
-    cin >> t;
-    while (t--) {
-        int n;
-        cin >> n;
-        vi v(n);
-        for(int &i : v) cin >> i;
-
-        srt(v);
-
-        for(int i = 0; i < n; i++){
-            cout << v[i] << " \n"[i == n-1];
-        }
-    }
+ 	int t;
+ 	cin >> t;
+ 	while (t--) {
+ 	   		int a, b, c, d;
+ 	   		cin >> a >> b >> c >> d;
+ 	   		int count = 0;
+ 	   		if(a < b) count++;
+ 	   		if(a < c) count++;
+ 	   		if(a < d) count++;
+ 	   		cout << count << endl;
+ 	   }   
 }
