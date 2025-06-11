@@ -29,7 +29,7 @@ ll nPr(ll n, ll r){
 }
 
 int main() {
-	ll n = 3, r = 3;
+	ll n = 25, r = 25;
 	cout << nCr(n, r) << endl;
 	cout << nPr(n, r) << endl;
 }

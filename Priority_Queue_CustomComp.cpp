@@ -7,7 +7,7 @@ using namespace std;
 
 struct comp {
     bool operator()(const pair<int,int> &a, const pair<int,int> &b){
-        return a.second < b.second;
+        return a.second > b.second;
     }
 };
 
