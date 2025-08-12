@@ -1,27 +1,65 @@
-#include <bits/stdc++.h>
-#include <functional>
-#include <queue>
-#include <utility>
+#include <iostream>
+#include <set>
 #include <vector>
 using namespace std;
 
-struct comp {
-    bool operator()(const pair<int,int> &a, const pair<int,int> &b){
-        return a.second < b.second;
-    }
-};
+void solve() {
+    int n, k;
+    cin >> n >> k;
 
-int main(){
+    // Store unique heights in a set
+    set<long long> heights;
+    long long current_height = 0; // Height of the starting tower
+
+    // Read tower heights and identify starting tower height
+    for (int i = 1; i <= n; i++) {
+        long long h;
+        cin >> h;
+        heights.insert(h);
+        if (i == k) {
+            current_height = h; // Set starting tower height
+        }
+    }
+
+    // Convert set to sorted vector of unique heights
+    vector<long long> sorted_heights(heights.begin(), heights.end());
+
+    // If already at max height or only one unique height, answer is YES
+    if (sorted_heights.back() == current_height) {
+        cout << "YES" << endl;
+        return;
+    }
+
+    long long water_level = 1; // Initial water level
+    // Try to reach each height in ascending order
+    for (size_t i = 0; i < sorted_heights.size() - 1; i++) {
+        long long next_height = sorted_heights[i + 1];
+        long long height_diff = next_height - sorted_heights[i]; // Time needed to teleport
+        long long time_available = current_height - water_level; // Time before drowning
+
+        // Check if we can teleport to the next height in time
+        if (height_diff > time_available + 1) {
+            cout << "NO" << endl;
+            return;
+        }
+
+        // Update position and water level after teleport
+        current_height = next_height;
+        water_level += height_diff;
+    }
+
+    cout << "YES" << endl;
+}
+
+int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    
-    vector<int> v = {4,3,2,5,7,3};
-    // priority_queue<int, vector<int>, less<int>> pq(v.begin(), v.end());
 
-    vector<pair<int,int>> pp = {{1,2}, {4,3}, {4,2}, {2,7}};
-    priority_queue<pair<int,int>, vector<pair<int,int>>, comp> pq(pp.begin(), pp.end());
-    while(!pq.empty()){
-        cout << pq.top().first << " " << pq.top().second << endl;
-        pq.pop();
-    } 
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
+
+    return 0;
 }
