@@ -22,7 +22,7 @@ int main(){
     int sr = 0, sc = 0;
     vector<vector<int>> dist(n, vector<int>(m, -1));
 
-    queue<pair<int,int>> q;
+    queue<pair<int,int>> q; // x, y
     q.push({sr, sc});
     dist[sr][sc] = 0;
 
@@ -44,3 +44,4 @@ int main(){
     int er = 4, ec = 4;
     cout << dist[er][ec] << endl;
 }   
+

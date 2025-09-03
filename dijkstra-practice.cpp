@@ -1,7 +1,5 @@
 #include <bits/stdc++.h>
-#include <functional>
-#include <queue>
-#include <vector>
+
 using namespace std;
 #define pii pair<int,int>
 const int N = 1e5 + 10;
@@ -19,7 +17,7 @@ void dijkstra(int src){
 		int node = pq.top().second;
 		pq.pop();
 
-		if(d < dist[node]) continue;
+		if(d > dist[node]) continue;
 
 		for(auto ngbr : graph[node]){
 			int wt = ngbr.first;
