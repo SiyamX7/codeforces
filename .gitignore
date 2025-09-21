@@ -1,3 +1,30 @@
+# Compiled object files
+*.o
+*.obj
+
+# Compiled dynamic libraries
+*.so
+*.dll
+*.dylib
+
+# Compiled static libraries
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Logs
+*.log
+
+# Build directories
+/build/
+/bin/
+/dist/
+
+
 0.cpp
 0
 inputf.in
