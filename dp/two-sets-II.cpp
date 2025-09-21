@@ -29,7 +29,7 @@ void solve(){
 
 	int ans = dp[t];
 	int inverse2 = (mod + 1) / 2; // 2^-1 using fermats little theorem
-
+ 
 	ans = (ans * inverse2) % mod;  
 
 	cout << ans;
