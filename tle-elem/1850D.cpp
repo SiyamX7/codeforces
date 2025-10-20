@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
+#include <iterator>
 using namespace std;
 
-#define ll long long                
+#define ll long long              
 #define pb  push_back
 #define eb  emplace_back                                 
 #define bug(x) cerr << #x << " = " << x << endl                 
@@ -11,18 +12,26 @@ template <typename T>
 void print(const vector<T>& vec) {for (const auto& val : vec) {cout << val << " ";}cout << endl;}
 
 void solve(){
-    ll a, b, n;
-    cin >> a >> b >> n;
+    int n, k;
+    cin >> n >> k ;
 
-    ll count = b;
+    vector<int> v(n);
+    for(int i = 0; i < n; i++) cin >> v[i];
+    sort(begin(v),end(v));
 
-   	for(int i = 0; i < n; i++){
-   		ll x; 
-   		cin >> x;
-   		count += min(a-1, x);
-   	}
+	int count = 1, mx = 1;
 
-   	cout << count << endl;
+	for(int i = 1; i < v.size(); i++){
+		if(v[i] - v[i-1] <= k){
+			count++;
+			mx = max(mx, count);
+		} else {
+			count = 1;
+		}
+	}
+	
+	bug(mx);
+	cout << n - mx << endl;
 }
 
 int main() {

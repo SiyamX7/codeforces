@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
+#include <iterator>
 using namespace std;
 
-#define ll long long                
+#define ll unsigned long long              
 #define pb  push_back
 #define eb  emplace_back                                 
 #define bug(x) cerr << #x << " = " << x << endl                 
@@ -11,18 +12,16 @@ template <typename T>
 void print(const vector<T>& vec) {for (const auto& val : vec) {cout << val << " ";}cout << endl;}
 
 void solve(){
-    ll a, b, n;
-    cin >> a >> b >> n;
+    ll n;
+    cin >> n;
 
-    ll count = b;
+    ll ans = 0;
 
-   	for(int i = 0; i < n; i++){
-   		ll x; 
-   		cin >> x;
-   		count += min(a-1, x);
-   	}
+    while(n % (ans + 1) == 0) ans++;
 
-   	cout << count << endl;
+    // 1 theke shuru korle shob cheye boro interval pawa jabe
+
+    cout << ans << endl;
 }
 
 int main() {
