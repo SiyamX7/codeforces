@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <functional>
 using namespace std;
 
 #define ll  long long              
@@ -12,10 +11,42 @@ template <typename T>
 void print(const vector<T>& vec) {for (const auto& val : vec) {cout << val << " ";}cout << endl;}
 
 void solve(){
-    int n, m, i, j;
-    cin >> n >> m >> i >> j;
+    ll x, n;
+    cin >> x >> n;
 
-    cout << 1 << " " << 1 << " " << n << " " << m << endl;
+    ll r = n % 4;
+    ll ans = x;
+
+    if(r == 0){
+    	ans = x;
+    } 
+
+    if(r == 1) {
+    	if(x % 2 == 0){
+    		ans = x - n;
+    	} else {
+    		ans = x + n;
+    	}
+    }
+
+    if(r == 2) {
+    	if(x % 2 == 0){
+    		ans = x + 1;
+    	} else {
+    		ans = x - 1;
+    	}
+    }
+
+    if(r == 3){
+    	if(x % 2 == 0){
+    		ans = x + n + 1;
+    	} else {
+    		ans = x - n - 1;
+    	}    	
+    }
+
+    cout << ans << endl;
+
 }
 
 int main() {
