@@ -38,4 +38,4 @@ int main(){
     } else {
     	cout << "Impossible" << endl;
     }
-}   
+}
