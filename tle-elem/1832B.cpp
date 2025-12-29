@@ -1,6 +1,4 @@
 #include <bits/stdc++.h>
-#include <string>
-#include <vector>
 using namespace std;
 
 #define ll  long long              
@@ -13,34 +11,32 @@ template <typename T>
 void print(const vector<T>& vec) {for (const auto& val : vec) {cout << val << " ";}cout << endl;}
 
 void solve(){
-	ll nn;
-	cin >> nn;
+    ll n, k;
+    cin >> n >> k;
 
-	bool flag = true;
+    vector<ll> v(n), pref(n+1);
+    for(int i = 0; i < n; i++){
+        cin >> v[i];
+    }
 
+    sort(v.begin(), v.end());
+    // print(v);
 
-	while(flag){
-		ll n = nn;
-		vector<ll> digits;
+    for(int i = 1; i <= n; i++){
+        pref[i] = pref[i-1] + v[i-1];
+    }
 
-		while(n != 0){
-			if(n % 10 != 0){
-				digits.pb(n % 10);
-			}
+    ll sum = 0;
+    for(int x = 0; x <= k; x++){
+        int y = k - x;
 
-			n /= 10;
-		}
+        ll ss = pref[n-y] - pref[2*x];
+        sum = max(sum, ss);
+    }
 
-		for(int i = 0; i < digits.size(); i++){
-			if(nn % digits[i] != 0){
-				nn++;
-				break;
-			} else if(i == digits.size()-1 && nn % digits[i] == 0){
-				cout << nn << endl;
-				flag = false;
-			}
-		}
-	}    
+    cout << sum << endl;
+    // print(pref);
+
 }
 
 int main() {

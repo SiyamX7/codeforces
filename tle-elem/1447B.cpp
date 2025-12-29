@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
-#include <string>
-#include <vector>
+#include <climits>
 using namespace std;
 
 #define ll  long long              
@@ -13,34 +12,34 @@ template <typename T>
 void print(const vector<T>& vec) {for (const auto& val : vec) {cout << val << " ";}cout << endl;}
 
 void solve(){
-	ll nn;
-	cin >> nn;
+    int n, m;
+    cin >> n >> m;
+    int v[n][m];
 
-	bool flag = true;
+    int mn = INT_MAX;
+    int neg = 0;
 
+    for(int i = 0; i < n; i++){
+    	for(int j = 0; j < m; j++){
+    		cin >> v[i][j];
 
-	while(flag){
-		ll n = nn;
-		vector<ll> digits;
+    		if(v[i][j] < 0) neg++;
+    		mn = min(mn, abs(v[i][j]));
+    	}
+    }
+    int sum = 0;
 
-		while(n != 0){
-			if(n % 10 != 0){
-				digits.pb(n % 10);
-			}
-
-			n /= 10;
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < m; j++){
+			sum += abs(v[i][j]);
 		}
+	}
 
-		for(int i = 0; i < digits.size(); i++){
-			if(nn % digits[i] != 0){
-				nn++;
-				break;
-			} else if(i == digits.size()-1 && nn % digits[i] == 0){
-				cout << nn << endl;
-				flag = false;
-			}
-		}
-	}    
+   	if(neg % 2 == 0){
+   		cout << sum << endl;
+   	} else {
+   		cout << sum - mn * 2 << endl;
+   	}
 }
 
 int main() {

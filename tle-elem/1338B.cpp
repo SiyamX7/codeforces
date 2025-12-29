@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
-#include <string>
-#include <vector>
+#include <unordered_map>
 using namespace std;
 
 #define ll  long long              
@@ -13,34 +12,24 @@ template <typename T>
 void print(const vector<T>& vec) {for (const auto& val : vec) {cout << val << " ";}cout << endl;}
 
 void solve(){
-	ll nn;
-	cin >> nn;
+    int n;
+    cin >> n;
+    unordered_map<ll,ll> mp;
 
-	bool flag = true;
+    for(int i = 0; i < n; i++){
+    	int x; 
+    	cin >> x;
+    	mp[x]++;
+    }
 
+    for(auto[x,y] : mp){
+    	if(y > 1) {
+    		cout << "YES" << endl;
+    		return;
+    	}
+    }
 
-	while(flag){
-		ll n = nn;
-		vector<ll> digits;
-
-		while(n != 0){
-			if(n % 10 != 0){
-				digits.pb(n % 10);
-			}
-
-			n /= 10;
-		}
-
-		for(int i = 0; i < digits.size(); i++){
-			if(nn % digits[i] != 0){
-				nn++;
-				break;
-			} else if(i == digits.size()-1 && nn % digits[i] == 0){
-				cout << nn << endl;
-				flag = false;
-			}
-		}
-	}    
+    cout << "NO" << endl;
 }
 
 int main() {

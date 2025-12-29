@@ -5,48 +5,59 @@ using namespace std;
 #define pb  push_back
 #define eb  emplace_back                                 
 #define bug(x) cerr << #x << " = " << x << endl                 
-
+ 
 void fast() {ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);}
 template <typename T>
 void print(const vector<T>& vec) {for (const auto& val : vec) {cout << val << " ";}cout << endl;}
 
 void solve(){
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    for(int i = 0; i < n; i++) cin >> v[i];
+    int n, k;
+    cin >> n >> k;
 
-    if(n == 1){
-        cout << 0 << endl;
-        return;
-    }
+    vector<int> v(k,0);
 
-    vector<int> dist;   
-    int mn = INT_MAX;
-    for(int i = 1; i < n; i++){
-        int x = v[i] - v[i-1];
-        dist.pb(x);
-        mn = min(x, mn);
-    }
+    int lcnt = 0;
 
-    int count = 0;
-    for(int i = 0; i < dist.size(); i++){
-        if(dist[i] == mn){
-            count++;
-        } 
-        else if(i > 0 && i+1 < dist.size() && dist[i] + dist[i-1] == dist[i+1]){
-            count++;
+    if(k % 2 == 1){
+        for(int i = 0; i < k; i++){
+            v[i] = n;
+        }
+    } else {
+        for(int b = 30; b >= 0; b--){
+
+
+            if((n >> b) & 1){
+                int ban = lcnt;
+
+                for(int i = 0; i < k; i++){
+                    if(i != ban) {
+                        v[i] += (1 << b);
+                    }
+                }
+
+                if(lcnt < k) {
+                    lcnt++;
+                }
+            } else {
+
+                int usable = (lcnt / 2) * 2; // jehetu even porjonto chalaite hobe, karon bit 0
+
+                for(int i = 0; i < usable; i++){
+                    v[i] += (1 << b);
+                }
+            }
         }
     }
 
-    cout << count + 1 << endl;
+    print(v);
 }
 
 int main() {
     fast(); 
 
-    int t;
+    int t = 1;
     cin >> t; 
 
     while (t--) solve();
 }
+    

@@ -1,6 +1,5 @@
+#include <algorithm>
 #include <bits/stdc++.h>
-#include <string>
-#include <vector>
 using namespace std;
 
 #define ll  long long              
@@ -13,41 +12,33 @@ template <typename T>
 void print(const vector<T>& vec) {for (const auto& val : vec) {cout << val << " ";}cout << endl;}
 
 void solve(){
-	ll nn;
-	cin >> nn;
+    int n; cin >> n;
+    string s; cin >> s;
 
-	bool flag = true;
+    vector<int> v(n,0);
+    for(int i = 0; i < n; i++){
+    	v[i] = s[i] - 'a';
+    }
 
-
-	while(flag){
-		ll n = nn;
-		vector<ll> digits;
-
-		while(n != 0){
-			if(n % 10 != 0){
-				digits.pb(n % 10);
-			}
-
-			n /= 10;
-		}
-
-		for(int i = 0; i < digits.size(); i++){
-			if(nn % digits[i] != 0){
-				nn++;
-				break;
-			} else if(i == digits.size()-1 && nn % digits[i] == 0){
-				cout << nn << endl;
-				flag = false;
-			}
-		}
-	}    
+    if(is_sorted(v.begin(), v.end())){
+    	cout << "NO" << endl;
+    	return;
+    } 
+    
+    for(int i = 0; i < n-1; i++){
+    	if(v[i] > v[i+1]){
+    		cout << "YES" << endl;
+    		cout << i+1 << " " << i+2 << endl;
+    		return;
+    	}
+    }
 }
 
 int main() {
     fast(); 
 
     int t = 1;
-    cin >> t; 
+    // cin >> t; 
 
     while (t--) solve();
 }
