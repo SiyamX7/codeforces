@@ -21,30 +21,45 @@ template <typename T>
 void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
 
 void solve() {
-	ll n;
+	int n;
 	cin >> n;
-	vector<ll> v(n);
-	for(ll &i : v) cin >> i;
+	vector<int> a(n), pref(n), suff(n);
 
-	sort(v.begin(), v.end());
-	
-	if(v[0] > 1){
-		cout << "NO" << endl;
-		return;
+	for(int &i : a) cin >> i;
+
+	pref[0] = a[0];
+	for(int i = 1; i < n; i++) {
+		pref[i] = pref[i-1] + a[i];
 	}
 
-	ll s = 1;
+	suff[n-1] = a[n-1];
+	for(int i = n-2; i >= 0; i--){
+		suff[i] = suff[i+1] + a[i]; 
+	} 
 
-	for(int i = 1; i < n; i++){
-		if(v[i] > s){
-			cout << "NO" << endl;
-			return;
+	int l = 0, r = n-1;
+	int i = 0, j = n-1;
+	bool ok = 0;
+
+	while(i < j){
+		if(pref[i] == suff[j]){
+			ok = 1;
+			l = i;
+			r = j;
+			i++;
+			j--;
+		} else if(pref[i] < suff[j]){
+			i++;
+		} else {
+			j--;
 		}
-
-		s += v[i];
 	}
-
-	cout << "YES" << endl;
+	
+	if(!ok) {
+		cout << 0 << endl;
+	} else {
+		cout << (l+1) + (n-r) << endl;
+	}
 }
 
 int main() {
@@ -53,3 +68,4 @@ int main() {
     cin >> t;
     while (t--) solve();
 }
+    

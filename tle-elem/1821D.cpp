@@ -23,28 +23,25 @@ void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " 
 void solve() {
 	ll n;
 	cin >> n;
-	vector<ll> v(n);
-	for(ll &i : v) cin >> i;
+	vector<ll> a(n), b(n);
 
-	sort(v.begin(), v.end());
-	
-	if(v[0] > 1){
-		cout << "NO" << endl;
-		return;
+	for(ll &i : a) cin >> i;
+	for(ll &i : b) cin >> i;
+
+	int l = 0, r = n-1;
+
+	for(l = 0; l < n; l++){
+		if(a[l] != b[l]) break;
 	}
 
-	ll s = 1;
-
-	for(int i = 1; i < n; i++){
-		if(v[i] > s){
-			cout << "NO" << endl;
-			return;
-		}
-
-		s += v[i];
+	for(r = n-1; r >= l; r--){
+		if(a[r] != b[r]) break;
 	}
 
-	cout << "YES" << endl;
+	while(l-1 >= 0 && b[l-1] <= b[l]) l--;
+	while(r+1 <= n-1 && b[r] <= b[r+1]) r++;
+
+	cout << l+1 << " " << r+1 << endl;
 }
 
 int main() {
@@ -53,3 +50,4 @@ int main() {
     cin >> t;
     while (t--) solve();
 }
+    

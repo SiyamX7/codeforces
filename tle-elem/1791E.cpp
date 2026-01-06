@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <climits>
 using namespace std;
 
 #define ll long long
@@ -21,30 +22,33 @@ template <typename T>
 void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
 
 void solve() {
-	ll n;
+	int n;
 	cin >> n;
-	vector<ll> v(n);
-	for(ll &i : v) cin >> i;
+	vector<int> a(n);
+	for(int &i : a) cin >> i;
 
-	sort(v.begin(), v.end());
-	
-	if(v[0] > 1){
-		cout << "NO" << endl;
-		return;
+	ll sum = 0;
+	ll neg = 0;
+	for(int i : a){
+		if(i < 0) neg++;
 	}
 
-	ll s = 1;
-
-	for(int i = 1; i < n; i++){
-		if(v[i] > s){
-			cout << "NO" << endl;
-			return;
+	if(neg % 2 == 0){
+		for(int i : a) {
+			sum += abs(i);
+		}
+	} else {
+		int mn = INT_MAX;
+		for(int &i : a) {
+			i = abs(i);
+			sum += abs(i);
+			mn = min(mn, i);
 		}
 
-		s += v[i];
+		sum -= 2*mn;
 	}
 
-	cout << "YES" << endl;
+	cout << sum << endl;
 }
 
 int main() {
@@ -53,3 +57,4 @@ int main() {
     cin >> t;
     while (t--) solve();
 }
+    

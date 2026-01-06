@@ -21,30 +21,41 @@ template <typename T>
 void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
 
 void solve() {
-	ll n;
-	cin >> n;
-	vector<ll> v(n);
-	for(ll &i : v) cin >> i;
+	int n, k; 
+	cin >> n >> k;
+	vector<vector<int>> a(n,vector<int>(n,0));
 
-	sort(v.begin(), v.end());
-	
-	if(v[0] > 1){
-		cout << "NO" << endl;
-		return;
-	}
-
-	ll s = 1;
-
-	for(int i = 1; i < n; i++){
-		if(v[i] > s){
-			cout << "NO" << endl;
-			return;
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < n; j++){
+			cin >> a[i][j];
 		}
-
-		s += v[i];
 	}
 
-	cout << "YES" << endl;
+	int count = 0;
+
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < n; j++){
+			if(a[i][j] != a[n-1-i][n-1-j])
+			{
+				count++;
+			}
+		}
+	}
+
+	count /= 2;
+
+	if(k >= count){
+		if((k - count) % 2 == 0){
+			cout << "YES" << endl;
+		} else if(n % 2 == 1){
+			cout << "YES" << endl;
+		} else{
+			cout << "NO" << endl;
+		}
+	} else {
+		cout << "NO" << endl;
+	}
+
 }
 
 int main() {
@@ -53,3 +64,4 @@ int main() {
     cin >> t;
     while (t--) solve();
 }
+    
