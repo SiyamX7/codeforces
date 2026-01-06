@@ -23,6 +23,7 @@
 /build/
 /bin/
 /dist/
+/StressTest/
 
 
 0.cpp

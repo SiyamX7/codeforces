@@ -15,21 +15,20 @@ long long rnd(long long l, long long r) {
 4 -> tree
 5 -> graph
 */
-
 int TYPE = 1;
 
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
-    int n = rnd(1, 10);   // change range when needed
+    
+    int n = rnd(2, 30);   // change range when needed
     cout << n << "\n";
 
     /* ================= ARRAY ================= */
     if (TYPE == 1) {
         for (int i = 0; i < n; i++) {
-            cout << rnd(1, 100) << " ";
+            cout << rnd(1, 1000) << " ";
         }
         cout << "\n";
     }
