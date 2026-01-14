@@ -21,35 +21,22 @@ template <typename T>
 void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
 
 void solve() {
-	ll n;
-	cin >> n;
-	vector<ll> v(n);
+    ll n, k, s, t;
+    cin >> n >> k >> s >> t;
+    s--, t--;
+    vector<ll> a(n), b(n);
+    for(int i = 0; i < n; i++) cin >> a[i] >> b[i];
 
-	for(int i = 0; i < n; i++){
-		cin >> v[i];
+    ll dist = 1LL * abs(a[s] - a[t]) + abs(b[s] - b[t]);
+
+	ll mna = 1e18, mnb = 1e18;
+
+	for(int i = 0; i < k; i++){
+		mna = min(mna,1LL* abs(a[s] - a[i]) + abs(b[s] - b[i]));
+		mnb = min(mnb,1LL* abs(a[i] - a[t]) + abs(b[i] - b[t]));
 	}
 
-	ll x = v[n-1];
-	ll r = n-1;
-
-	while(r >= 0 && v[r] == x) r--;
-
-	if(r == -1) {
-		cout << 0 << endl;
-		return;
-	}
-
-	ll count = 0;
-	ll len = n - 1 - r;
-
-	while(r >= 0){
-		count++;
-		r -= (n - 1 - r);
-		while(r >= 0 && v[r] == x) r--;
-	}
-
-	cout << count << endl;
-
+	cout << min(dist, mna+mnb) << endl;
 }
 
 int main() {

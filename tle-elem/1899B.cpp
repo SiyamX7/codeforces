@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <climits>
 using namespace std;
 
 #define ll long long
@@ -21,35 +22,48 @@ template <typename T>
 void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
 
 void solve() {
-	ll n;
-	cin >> n;
-	vector<ll> v(n);
+    ll n;
+    cin >> n;
+    vector<ll> a(n), pref(n);
+    for(int i = 0; i < n; i++) cin >> a[i];
 
-	for(int i = 0; i < n; i++){
-		cin >> v[i];
-	}
+    for(int i = 0; i < n; i++) {
+    	if(!i){
+    		pref[i] = a[i];
+    	} else {
+    		pref[i] = pref[i-1] + a[i];
+    	}
+    }    
 
-	ll x = v[n-1];
-	ll r = n-1;
+    vector<ll> div;
+    for(int i = 1; i * i <= n; i++){
+    	if(n % i == 0){
+    		div.pb(i);
 
-	while(r >= 0 && v[r] == x) r--;
+    		if(i != n/i && n/i != n){
+    			div.pb(n/i);
+    		}
+    	}
+    }
 
-	if(r == -1) {
-		cout << 0 << endl;
-		return;
-	}
+    ll mxdiff = LLONG_MIN;
 
-	ll count = 0;
-	ll len = n - 1 - r;
+    for(ll i : div){
+    	ll mx = pref[i-1];
+    	ll mn = pref[i-1];
 
-	while(r >= 0){
-		count++;
-		r -= (n - 1 - r);
-		while(r >= 0 && v[r] == x) r--;
-	}
+    	for(int j = i; j + i <= n; j+=i){
+    		ll diff = pref[j+i-1] - pref[j-1]; 
+    		mx = max(mx, diff);
+    		mn = min(mn, diff);
+    	}
 
-	cout << count << endl;
+    	mxdiff = max(mxdiff, mx - mn);
+    }
 
+    cout << mxdiff << endl;
+
+    // print(div);
 }
 
 int main() {

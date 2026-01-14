@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <deque>
 using namespace std;
 
 #define ll long long
@@ -21,41 +22,32 @@ template <typename T>
 void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
 
 void solve() {
-	ll n;
-	cin >> n;
-	vector<ll> v(n);
+    ll n, q;
+    cin >> n >> q;
+    deque<ll> a(n);
+    vector<ll> b(q);
 
-	for(int i = 0; i < n; i++){
-		cin >> v[i];
-	}
+    for(int i = 0; i < n; i++) cin >> a[i];
+    for(int i = 0; i < q; i++) cin >> b[i];
 
-	ll x = v[n-1];
-	ll r = n-1;
+    for(int i = 0; i < q; i++){
+    	for(int j = 0; j < n; j++){
+    		if(a[j] == b[i]){
+    			cout << j + 1 << " ";
 
-	while(r >= 0 && v[r] == x) r--;
-
-	if(r == -1) {
-		cout << 0 << endl;
-		return;
-	}
-
-	ll count = 0;
-	ll len = n - 1 - r;
-
-	while(r >= 0){
-		count++;
-		r -= (n - 1 - r);
-		while(r >= 0 && v[r] == x) r--;
-	}
-
-	cout << count << endl;
-
+    			int x = a[j];
+    			a.erase(a.begin()+j);
+    			a.push_front(x);
+    			break;
+    		}
+    	}
+    }
 }
 
 int main() {
     fast();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
 }
     

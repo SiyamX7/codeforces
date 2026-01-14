@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <climits>
 using namespace std;
 
 #define ll long long
@@ -23,33 +24,32 @@ void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " 
 void solve() {
 	ll n;
 	cin >> n;
-	vector<ll> v(n);
+	ll a[n];
+	for(ll &i : a) cin >> i;
 
-	for(int i = 0; i < n; i++){
-		cin >> v[i];
+	ll MAX = a[0];
+	ll SUM = a[0];
+
+	for(int i = 1; i < n; i++){
+		if(a[i] & 1){ 
+			if(a[i-1] & 1){
+				SUM = a[i];
+			} else {
+				SUM = max(a[i], a[i] + SUM);
+			}
+		}
+		else {
+			if(a[i-1] & 1){
+				SUM = max(a[i], a[i] + SUM);
+			} else {
+				SUM = a[i];
+			}
+		}
+
+		MAX = max(MAX, SUM);
 	}
 
-	ll x = v[n-1];
-	ll r = n-1;
-
-	while(r >= 0 && v[r] == x) r--;
-
-	if(r == -1) {
-		cout << 0 << endl;
-		return;
-	}
-
-	ll count = 0;
-	ll len = n - 1 - r;
-
-	while(r >= 0){
-		count++;
-		r -= (n - 1 - r);
-		while(r >= 0 && v[r] == x) r--;
-	}
-
-	cout << count << endl;
-
+	cout << MAX << endl;
 }
 
 int main() {

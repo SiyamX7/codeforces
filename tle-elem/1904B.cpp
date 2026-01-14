@@ -21,34 +21,18 @@ template <typename T>
 void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
 
 void solve() {
-	ll n;
-	cin >> n;
-	vector<ll> v(n);
+    ll n;
+    cin >> n;
+    vector<ll> a(n), pref(n);
+    for(int i = 0; i < n; i++) cin >> a[i];
 
+    auto b = a;
+	sort(a.begin(), a.end());
+	print(a);
 	for(int i = 0; i < n; i++){
-		cin >> v[i];
+		int count = 0;
+		
 	}
-
-	ll x = v[n-1];
-	ll r = n-1;
-
-	while(r >= 0 && v[r] == x) r--;
-
-	if(r == -1) {
-		cout << 0 << endl;
-		return;
-	}
-
-	ll count = 0;
-	ll len = n - 1 - r;
-
-	while(r >= 0){
-		count++;
-		r -= (n - 1 - r);
-		while(r >= 0 && v[r] == x) r--;
-	}
-
-	cout << count << endl;
 
 }
 
