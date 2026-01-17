@@ -18,42 +18,32 @@ template <typename T>
 void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
 
 void solve() {
-    ll n;
-    cin >> n;
-    vector<ll> a(n);
+    ll n, k;
+    cin >> n >> k;
+    vector<ll> a(n), b(n), mx(n), pref(n);
     for(int i = 0; i < n; i++) cin >> a[i];
+    for(int i = 0; i < n; i++) cin >> b[i];
 
-    vector<pair<ll,ll>> pos;
-    for(int i = 0; i < n; i++){
-        pos.pb({a[i], i});
-    }
-
-    sort(pos.begin(), pos.end());
-
-    vector<ll> ans(n);
-
-    vector<ll> pref(n,0);
-    pref[0] = pos[0].first;
+    mx[0] = b[0];
     for(int i = 1; i < n; i++){
-        pref[i] = pref[i-1] + pos[i].first; 
+    	mx[i] = max(mx[i-1], b[i]);
     }
 
-    vector<ll> dp(n+1, 0);
-    dp[n] = n;
-
-    for(int i = n-1; i >= 0; i--){
-        if(i == 0 || pos[i].first > pref[i-1]){
-            dp[i] = i;
-        } else {
-            dp[i] = dp[i+1];
-        }
+    pref[0] = a[0];
+    for(int i = 1; i < n; i++){
+    	pref[i] = pref[i-1] + a[i];
     }
 
-    for(int i = 0; i < n; i++){
-        ans[pos[i].second] = dp[i+1] - 1;
+    ll ans = 0;
+
+    for(int i = 1; i <= min(n,k); i++){
+    	ll sum = pref[i-1];
+    	ll rem = k - i;
+    	sum += rem * mx[i-1];
+    	ans = max(ans, sum);
     }
 
-    print(ans);
+    cout << ans << endl;
 }
 
 int main() {

@@ -18,42 +18,24 @@ template <typename T>
 void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
 
 void solve() {
-    ll n;
-    cin >> n;
-    vector<ll> a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
+	int n; 
+	cin >> n;
+    string s;
+    cin >> s;
+    int x = 0, y = 0;
+    for(char c : s){
+    	if(c == 'U') y++;
+    	if(c == 'D') y--;
+    	if(c == 'L') x--;
+    	if(c == 'R') x++;
 
-    vector<pair<ll,ll>> pos;
-    for(int i = 0; i < n; i++){
-        pos.pb({a[i], i});
+    	if(x == 1 && y == 1){
+    		cout << "yes" << endl;
+    		return;
+    	}
     }
 
-    sort(pos.begin(), pos.end());
-
-    vector<ll> ans(n);
-
-    vector<ll> pref(n,0);
-    pref[0] = pos[0].first;
-    for(int i = 1; i < n; i++){
-        pref[i] = pref[i-1] + pos[i].first; 
-    }
-
-    vector<ll> dp(n+1, 0);
-    dp[n] = n;
-
-    for(int i = n-1; i >= 0; i--){
-        if(i == 0 || pos[i].first > pref[i-1]){
-            dp[i] = i;
-        } else {
-            dp[i] = dp[i+1];
-        }
-    }
-
-    for(int i = 0; i < n; i++){
-        ans[pos[i].second] = dp[i+1] - 1;
-    }
-
-    print(ans);
+    cout << "no" << endl;
 }
 
 int main() {

@@ -8,9 +8,12 @@ using namespace std;
 
 #define rem(v,x) (v).erase(remove((v).begin(), (v).end(), (x)), (v).end())
 #define leftrotate(v,k) rotate((v).begin(), (v).begin() + ((k) % (v).size()), (v).end())
-
+#define rightrotate(v,k) rotate((v).begin(), (v).end() - ((k) % (v).size()), (v).end())
+#define popcount(x) __builtin_popcount(x)
 #define popcountll(x) __builtin_popcountll(x)
+#define lz(x) __builtin_clz(x)
 #define lzll(x) __builtin_clzll(x)
+#define tz(x) __builtin_ctz(x)
 #define tzll(x) __builtin_ctzll(x)
 
 void fast() { ios::sync_with_stdio(0); cin.tie(0); cout.tie(0); }
@@ -18,42 +21,31 @@ template <typename T>
 void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
 
 void solve() {
-    ll n;
-    cin >> n;
-    vector<ll> a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
-
-    vector<pair<ll,ll>> pos;
-    for(int i = 0; i < n; i++){
-        pos.pb({a[i], i});
+    ll n, k;
+    cin >> n >> k;
+    vector<ll> a(n), b(k);
+    for(int i = 0; i < n; i++) {
+    	cin >> a[i];
     }
 
-    sort(pos.begin(), pos.end());
+    for(int i = 0; i < k; i++) cin >> b[i];
 
-    vector<ll> ans(n);
+    ll prev = 31;
 
-    vector<ll> pref(n,0);
-    pref[0] = pos[0].first;
-    for(int i = 1; i < n; i++){
-        pref[i] = pref[i-1] + pos[i].first; 
-    }
+	for(int i = 0; i < k; i++){
+		if(b[i] >= prev) continue;
+		ll x = (1ll << b[i]);
+		
+		for(int j = 0; j < n; j++){
+			if(a[j] % x == 0){
+				a[j] += (1ll << (b[i]-1));
+			}
+		}
 
-    vector<ll> dp(n+1, 0);
-    dp[n] = n;
+		prev = b[i];
+	}
 
-    for(int i = n-1; i >= 0; i--){
-        if(i == 0 || pos[i].first > pref[i-1]){
-            dp[i] = i;
-        } else {
-            dp[i] = dp[i+1];
-        }
-    }
-
-    for(int i = 0; i < n; i++){
-        ans[pos[i].second] = dp[i+1] - 1;
-    }
-
-    print(ans);
+	print(a);
 }
 
 int main() {

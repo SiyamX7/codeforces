@@ -18,42 +18,29 @@ template <typename T>
 void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
 
 void solve() {
-    ll n;
-    cin >> n;
-    vector<ll> a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
+    int n, x;
+    cin >> n >> x;
+    int a[3][n];
 
-    vector<pair<ll,ll>> pos;
-    for(int i = 0; i < n; i++){
-        pos.pb({a[i], i});
+    for(int i = 0; i < 3; i++) {
+    	for(int j = 0; j < n; j++){
+    		cin >> a[i][j];
+    	}
     }
 
-    sort(pos.begin(), pos.end());
-
-    vector<ll> ans(n);
-
-    vector<ll> pref(n,0);
-    pref[0] = pos[0].first;
-    for(int i = 1; i < n; i++){
-        pref[i] = pref[i-1] + pos[i].first; 
+    int sum = 0;
+    for(int i = 0; i < 3; i++){
+    	for(int j = 0; j < n; j++){
+    		if((a[i][j] | x) == x){
+    			sum |= a[i][j];
+    		} else {
+    			break;
+    		}
+    	}
     }
 
-    vector<ll> dp(n+1, 0);
-    dp[n] = n;
-
-    for(int i = n-1; i >= 0; i--){
-        if(i == 0 || pos[i].first > pref[i-1]){
-            dp[i] = i;
-        } else {
-            dp[i] = dp[i+1];
-        }
-    }
-
-    for(int i = 0; i < n; i++){
-        ans[pos[i].second] = dp[i+1] - 1;
-    }
-
-    print(ans);
+    if(sum == x) cout << "yes" << endl;
+    else cout << "no" << endl;
 }
 
 int main() {

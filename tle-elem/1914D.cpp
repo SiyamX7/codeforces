@@ -5,6 +5,7 @@ using namespace std;
 #define pb push_back
 #define eb emplace_back
 #define bug(x) cerr << #x << " = " << x << endl
+#define endl '\n'
 
 #define rem(v,x) (v).erase(remove((v).begin(), (v).end(), (x)), (v).end())
 #define leftrotate(v,k) rotate((v).begin(), (v).begin() + ((k) % (v).size()), (v).end())
@@ -22,38 +23,6 @@ void solve() {
     cin >> n;
     vector<ll> a(n);
     for(int i = 0; i < n; i++) cin >> a[i];
-
-    vector<pair<ll,ll>> pos;
-    for(int i = 0; i < n; i++){
-        pos.pb({a[i], i});
-    }
-
-    sort(pos.begin(), pos.end());
-
-    vector<ll> ans(n);
-
-    vector<ll> pref(n,0);
-    pref[0] = pos[0].first;
-    for(int i = 1; i < n; i++){
-        pref[i] = pref[i-1] + pos[i].first; 
-    }
-
-    vector<ll> dp(n+1, 0);
-    dp[n] = n;
-
-    for(int i = n-1; i >= 0; i--){
-        if(i == 0 || pos[i].first > pref[i-1]){
-            dp[i] = i;
-        } else {
-            dp[i] = dp[i+1];
-        }
-    }
-
-    for(int i = 0; i < n; i++){
-        ans[pos[i].second] = dp[i+1] - 1;
-    }
-
-    print(ans);
 }
 
 int main() {

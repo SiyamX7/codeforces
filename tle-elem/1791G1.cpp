@@ -18,42 +18,29 @@ template <typename T>
 void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
 
 void solve() {
-    ll n;
-    cin >> n;
-    vector<ll> a(n);
+    ll n, c;
+    cin >> n >> c;
+    vector<ll> a(n),b(n);
     for(int i = 0; i < n; i++) cin >> a[i];
-
-    vector<pair<ll,ll>> pos;
+    	
     for(int i = 0; i < n; i++){
-        pos.pb({a[i], i});
+    	b[i] = a[i] + i + 1;
     }
 
-    sort(pos.begin(), pos.end());
+    sort(b.begin(), b.end());
 
-    vector<ll> ans(n);
-
-    vector<ll> pref(n,0);
-    pref[0] = pos[0].first;
-    for(int i = 1; i < n; i++){
-        pref[i] = pref[i-1] + pos[i].first; 
-    }
-
-    vector<ll> dp(n+1, 0);
-    dp[n] = n;
-
-    for(int i = n-1; i >= 0; i--){
-        if(i == 0 || pos[i].first > pref[i-1]){
-            dp[i] = i;
-        } else {
-            dp[i] = dp[i+1];
-        }
-    }
+    ll count = 0;
 
     for(int i = 0; i < n; i++){
-        ans[pos[i].second] = dp[i+1] - 1;
+    	if(c >= b[i]){
+    		count++;
+    		c -= b[i];
+    	} else {
+    		break;
+    	}
     }
 
-    print(ans);
+    cout << count << endl;
 }
 
 int main() {
