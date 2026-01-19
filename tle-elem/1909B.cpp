@@ -21,32 +21,30 @@ void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " 
 void solve() {
     ll n;
     cin >> n;
-    string s;
-    cin >> s;
+    vector<ll> a(n);
+    for(int i = 0; i < n; i++) cin >> a[i];
 
-    ll l = 0, r = n-1;
-    ll ans = 0;
-    while(l < r){
-        if(s[l] == ')') {
-            l++;
-            continue;
+    for(int i = 1; i <= 63; i++){
+        set<ll> s;
+        for(int j = 0; j < n; j++){
+            s.insert(a[j] % (1ll << i));
+            if(s.size() > 2) break;
         }
 
-        if(s[l] == '('){
-            while(s[r] != ')') r--;
-            if(s[r] == ')') ans += 2;
-            l++, r--;
+        if(s.size() == 2){
+            cout << (1ll << i) << endl;
+            return;
         }
-
     }
 
-    if(ans != n) cout << ans << endl;
-    else cout << -1 << endl;
 }
 
 int main() {
     fast();
     int t = 1;
     cin >> t;
-    while (t--) solve();
+    int c = 1;
+    while (t--) {
+        solve(); 
+    }
 }

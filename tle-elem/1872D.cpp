@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define ll long long
+#define int long long
 #define pb push_back
 #define eb emplace_back
 #define bug(x) cerr << #x << " = " << x << endl
@@ -19,32 +19,33 @@ template <typename T>
 void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
 
 void solve() {
-    ll n;
+    int n;
     cin >> n;
-    string s;
-    cin >> s;
-
-    ll l = 0, r = n-1;
-    ll ans = 0;
-    while(l < r){
-        if(s[l] == ')') {
-            l++;
-            continue;
-        }
-
-        if(s[l] == '('){
-            while(s[r] != ')') r--;
-            if(s[r] == ')') ans += 2;
-            l++, r--;
-        }
-
+    set<int> s;
+    for (int i = 0; i < n; ++i) {
+        int x;
+        cin >> x;
+        s.insert(x);
     }
 
-    if(ans != n) cout << ans << endl;
-    else cout << -1 << endl;
+    vector<int> v(s.begin(), s.end());
+    int k = v.size();
+
+    int ans = 1;
+    int curr = 1;
+
+    for (int i = 1; i < k; i++) {
+        if (v[i] == v[i - 1] + 1) {
+            curr++;
+        } else {
+            curr = 1;
+        }
+        ans = max(ans, curr);
+    }
+    cout << ans << endl;
 }
 
-int main() {
+signed main() {
     fast();
     int t = 1;
     cin >> t;

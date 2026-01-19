@@ -1,4 +1,6 @@
+#include <algorithm>
 #include <bits/stdc++.h>
+#include <functional>
 using namespace std;
 
 #define ll long long
@@ -21,8 +23,46 @@ void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " 
 void solve() {
     ll n;
     cin >> n;
-    vector<ll> a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
+    vector<pair<ll,ll>> a(n), b(n), c(n);
+    for(int i = 0; i < n; i++){
+    	ll x; 
+    	cin >> x;
+    	a[i] = {x,i};
+    }
+
+    for(int i = 0; i < n; i++){
+    	ll x; 
+    	cin >> x;
+    	b[i] = {x,i};
+    }
+
+    for(int i = 0; i < n; i++){
+    	ll x; 
+    	cin >> x;
+    	c[i] = {x,i};
+    }
+
+    sort(a.begin(), a.end(), greater<>());
+    sort(b.begin(), b.end(), greater<>());
+    sort(c.begin(), c.end(), greater<>());
+
+    ll ans = 0;
+
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            for(int k = 0; k < 3; k++){
+                ll x = a[i].second;
+                ll y = b[j].second;
+                ll z = c[k].second;
+
+                if(x != y && y != z && z != x){
+                    ans = max(ans, a[i].first + b[j].first + c[k].first);
+                }
+            }
+        }
+    }
+
+    cout << ans << endl;
 }
 
 int main() {
