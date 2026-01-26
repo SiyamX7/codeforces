@@ -1,52 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define ll long long
-#define pb push_back
-#define eb emplace_back
-#define bug(x) cerr << #x << " = " << x << endl
-#define endl '\n'
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-#define rem(v,x) (v).erase(remove((v).begin(), (v).end(), (x)), (v).end())
-#define leftrotate(v,k) rotate((v).begin(), (v).begin() + ((k) % (v).size()), (v).end())
+    int t;
+    cin >> t;
 
-#define popcountll(x) __builtin_popcountll(x)
-#define lzll(x) __builtin_clzll(x)
-#define tzll(x) __builtin_ctzll(x)
+    while (t--) {
+        int n;
+        cin >> n;
 
-void fast() { ios::sync_with_stdio(0); cin.tie(0); cout.tie(0); }
-template <typename T>
-void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
-
-void solve() {
-    ll n;
-    cin >> n;
-    string s;
-    cin >> s;
-
-    ll l = 0, r = n-1;
-    ll ans = 0;
-    while(l < r){
-        if(s[l] == ')') {
-            l++;
-            continue;
+        vector<int> a(n);
+        int maxA = 0;
+        for (int i = 0; i < n; i++) {
+            cin >> a[i];
+            maxA = max(maxA, a[i]);
         }
 
-        if(s[l] == '('){
-            while(s[r] != ')') r--;
-            if(s[r] == ')') ans += 2;
-            l++, r--;
+        
+        vector<int> d(n + 1, INT_MAX);
+
+        
+        unordered_set<int> s(a.begin(), a.end());
+        for (int x : s) {
+            if (x <= n) d[x] = 1;
         }
 
+        
+        for (int i = 1; i <= n; i++) {
+            if (d[i] == INT_MAX) continue;
+
+            for (int x : s) {
+                long long prod = 1LL * i * x;
+                if (prod > n) continue;
+                d[prod] = min(d[prod], d[i] + 1);
+            }
+        }
+
+     
+        for (int i = 1; i <= n; i++) {
+            if (d[i] == INT_MAX) cout << -1 << " ";
+            else cout << d[i] << " ";
+        }
+        cout << "\n";
     }
 
-    if(ans != n) cout << ans << endl;
-    else cout << -1 << endl;
-}
-
-int main() {
-    fast();
-    int t = 1;
-    cin >> t;
-    while (t--) solve();
+    return 0;
 }

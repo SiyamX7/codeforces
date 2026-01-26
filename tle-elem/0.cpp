@@ -1,70 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define int long long
-#define pb push_back
-#define eb emplace_back
-#define bug(x) cerr << #x << " = " << x << endl
-#define endl '\n'
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-#define rem(v,x) (v).erase(remove((v).begin(), (v).end(), (x)), (v).end())
-#define leftrotate(v,k) rotate((v).begin(), (v).begin() + ((k) % (v).size()), (v).end())
-
-#define popcountll(x) __builtin_popcountll(x)
-#define lzll(x) __builtin_clzll(x)
-#define tzll(x) __builtin_ctzll(x)
-
-void fast() { ios::sync_with_stdio(0); cin.tie(0); cout.tie(0); }
-template <typename T>
-void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
-
-void solve() {
-    int n, m, k;
-    cin >> n >> m >> k;
-    set<int> r, s;
-    for(int i = 0; i < n; i++){
-        int x; cin >> x;
-        r.insert(x);
-    }
-
-    for(int i = 0; i < m; i++){
-        int x; cin >> x;
-        s.insert(x);
-    }
-    
-    string ss;
-    cin >> ss;
-
-    int count = 0;
-
-    for(int i = 0; i < k; i++){
-        if(ss[i] == 'L'){
-            count--;
-        } else {
-            count++;
-        }
-
-        vector<int> rem;
-
-        for(int i : s){
-            int p = i - count;
-
-            if(r.count(p)) rem.pb(p);
-        }
-
-        for(int i : rem){
-            r.erase(i);
-        }
-
-        cout << r.size() << " ";
-    }
-
-    cout << endl;
-}
-
-signed main() {
-    fast();
-    int t = 1;
+    int t;
     cin >> t;
-    while (t--) solve();
+    while(t--) {
+        int n;
+        cin >> n;
+        vector<int> a(n), b(n);
+        for(int i = 0; i < n; i++) cin >> a[i];
+        for(int i = 0; i < n; i++) cin >> b[i];
+
+        sort(a.begin(), a.end()); // ascending
+        vector<long long> prefix(n+1, 0); // cumulative swords count
+        for(int i = 0; i < n; i++) prefix[i+1] = prefix[i] + 1; // 1 sword per sword
+
+        long long max_score = 0;
+
+        // সম্ভাব্য difficulty হলো a[i] থেকে নেওয়া
+        for(int i = 0; i < n; i++) {
+            int x = a[i];
+
+            // কতো swords usable (strength >= x)
+            int idx = lower_bound(a.begin(), a.end(), x) - a.begin();
+            int usable = n - idx;
+
+            // এখন কতো level পার করা যাবে
+            int levels_done = 0;
+            int swords_left = usable;
+            for(int j = 0; j < n; j++) {
+                if(b[j] <= swords_left) {
+                    swords_left -= b[j];
+                    levels_done++;
+                } else break;
+            }
+
+            max_score = max(max_score, 1LL * x * levels_done);
+        }
+
+        cout << max_score << "\n";
+    }
+    return 0;
 }
