@@ -10,8 +10,8 @@ static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
 #define rall(x) (x).rbegin(), (x).rend()
 #define sz(x) (int)(x).size()
 #define popcount(x) __builtin_popcountll(x)
-#define lz(x) __builtin_clzll(x)
-#define tz(x) __builtin_ctzll(x)
+#define clz(x) __builtin_clzll(x)
+#define ctz(x) __builtin_ctzll(x)
 #define endl '\n'
 #define yes cout<<"YES\n"
 #define no  cout<<"NO\n"
@@ -63,40 +63,26 @@ i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
 void solve(int t){
-    int n, x; 
+    int n, x;
     cin >> n >> x;
-    vector<int> a(n);
-    for(int &x:a) cin >> x;
+    vector<int> a(n+1), pref(n+1,0);
+    for(int i = 1; i <= n; i++){
+    	cin >> a[i];
+    }
 
     sort(all(a));
 
-    vector<int> pref(n+1,0);
-    for(int i = 0; i < n; i++){
-        pref[i+1] = pref[i] + a[i];
+    for(int i = 1; i <= n; i++){
+    	pref[i] = pref[i-1] + a[i];
     }
 
     int ans = 0;
-    int day = 0;
 
-    while(true){
-        int l = 1, r = n, best = 0;
+    for(int k = 1; k <= n; k++){
+    	if(pref[k] > x) break;
 
-        while(l <= r){
-            int m = (l + (r - l) / 2);
-            int cost = pref[m] + m * day;
-
-            if(cost <= x){
-                best = m;
-                l = m + 1;
-            } else {
-                r = m - 1;
-            }
-        }
-
-        if(best == 0) break;
-
-        ans += best;
-        day++;
+    	int day = (x - pref[k]) / k + 1;
+    	ans += day;
     }
 
     cout << ans << endl;
