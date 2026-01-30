@@ -1,6 +1,4 @@
-#include <algorithm>
 #include <bits/stdc++.h>
-#include <cstdlib>
 using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
@@ -45,23 +43,51 @@ template<class T> void print(const vector<vector<T>>&v){ for(auto &r:v){ for(aut
 i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,i=1; for(;i<sz(s);i++) x=x*10+(s[i]-'0'); return x*sg; }
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
-void solve(int t){
-    int n; 
-    cin >> n;
+int fn(int x, int y) {
+    if (x == 0) return 0;
+    if ((x & y) == 0) return x;
 
-    int k = n/2;
-    vector<int> a(n,0);
-    for(int i = 0; i < n; i+=2){
-        a[i] = ++k;
+    int msb = 63 - clz(x);
+    int ans = 0;
+
+    for (int i = 0; i <= msb; i++) {
+        int mask = (1LL << i);
+
+        if ((y & mask) == 0) {
+        	ans |= mask;
+        }
     }
 
-    k = n/2;
-    for(int i = 1; i < n; i+=2){
-        a[i] = k--;
+    int gg = ans;
+    int temp = abs(x - ans);
+
+    int c = (1LL << (msb + 1));
+    if ((c & y) == 0) {
+        int d = abs(x - c);
+        if (d <= temp) {
+            gg = c;
+            temp = d;
+        }
     }
 
-    print(a);
-    
+    return gg;
+}
+
+void solve(int t) {
+    int x, y;
+    cin >> x >> y;
+
+    int xx = fn(x, y);
+    int costx = abs(x - xx);
+
+    int yy = fn(y, x);
+    int costy = abs(y - yy);
+
+    if (costx <= costy) {
+        cout << xx << " " << y << endl;
+    } else {
+        cout << x << " " << yy << endl;
+    }
 }
 
 signed main(){
@@ -74,4 +100,3 @@ signed main(){
 
     return 0;
 }
-    

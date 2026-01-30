@@ -4,78 +4,18 @@ using namespace std;
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
 
 #define int long long
-#define i128 __int128_t
-#define u128 __uint128_t
-#define all(x) (x).begin(), (x).end()
-#define rall(x) (x).rbegin(), (x).rend()
-#define sz(x) (int)(x).size()
-#define popcount(x) __builtin_popcountll(x)
-#define lz(x) __builtin_clzll(x)
-#define tz(x) __builtin_ctzll(x)
-#define endl '\n'
-#define yes cout<<"YES\n"
-#define no  cout<<"NO\n"
-#define test cout<<"Test #"<<t<<":\n"
-#define pb push_back
-#define eb emplace_back
-#define f first
-#define s second
 
 const int INF = 4e18;
 const int MOD = 1e9+7;
 
-/* ================= DEBUG ================= */
-#ifdef LOCAL
-#define debug(x) cerr<<#x<<" = "<<x<<endl
-#define debug2(x,y) cerr<<#x<<" = "<<x<<", "<<#y<<" = "<<y<<endl
-#define debugp(p) cerr<<"("<<(p).f<<", "<<(p).s<<")"<<endl
-#define debugv(v) do{ cerr<<"[ "; for(auto &_x:v) cerr<<_x<<" "; cerr<<"]\n"; }while(0)
-#define debugs(s) do{ cerr<<"{ "; for(auto &_x:s) cerr<<_x<<" "; cerr<<"}\n"; }while(0)
-#define debugm(m) do{ cerr<<"{ "; for(auto &_p:m) cerr<<_p.f<<":"<<_p.s<<" "; cerr<<"}\n"; }while(0)
-#define debug128(x) do{ i128 _t=x; if(_t==0){cerr<<0<<endl;break;} if(_t<0) cerr<<"-",_t=-_t; string _s; while(_t){_s.pb('0'+_t%10);_t/=10;} reverse(all(_s)); cerr<<_s<<endl; }while(0)
-#else
-#define debug(...)
-#define debug2(...)
-#define debugp(...)
-#define debugv(...)
-#define debugs(...)
-#define debugm(...)
-#define debug128(...)
-#endif
 
-/* ================= UTILS ================= */
-template<class T> void uniq(vector<T>&v){ sort(all(v)); v.erase(unique(all(v)),v.end()); }
-template<class T> void remVAL(vector<T>&v,T x){ v.erase(remove(all(v),x),v.end()); }
-template<class T> void remID(vector<T>&v,int i){ if(i>=0 && i<sz(v)) v.erase(v.begin()+i); }
-template<class T> void rot(vector<T>&v,int k){ if(v.empty()) return; k%=sz(v); rotate(v.begin(),v.begin()+k,v.end()); }
 
-/* ================= PRINT ================= */
-template<class T> void print(const T&x){ cout<<x<<'\n'; }
-template<class A,class B> void print(const pair<A,B>&p){ cout<<p.f<<" "<<p.s<<'\n'; }
-template<class T> void print(const vector<T>&v){ for(auto &x:v) cout<<x<<" "; cout<<'\n'; }
-template<class A,class B> void print(const vector<pair<A,B>>&v){ for(auto &p:v) cout<<p.f<<" "<<p.s<<'\n'; }
-template<class T> void print(const set<T>&s){ for(auto &x:s) cout<<x<<" "; cout<<'\n'; }
-template<class K,class V> void print(const map<K,V>&m){ for(auto &p:m) cout<<p.f<<" : "<<p.s<<'\n'; }
-template<class T> void print(const vector<vector<T>>&v){ for(auto &r:v){ for(auto &x:r) cout<<x<<" "; cout<<'\n'; } }
-
-/* ================= i128 IO ================= */
-i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,i=1; for(;i<sz(s);i++) x=x*10+(s[i]-'0'); return x*sg; }
-void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
-
-void solve(int t){
-    for(int i = 1; i <= 100; i++){
-        cout << i << " ";
-    }
-    
-}
-
-signed main(){
+signed main() {
     fast();
-    int T=1; 
-    cin>>T;
-    for(int t = 1;t <= T;t++){
+    int T;
+    cin >> T;
+    for (int t = 1; t <= T; t++) {
         solve(t);
     }
-
     return 0;
 }

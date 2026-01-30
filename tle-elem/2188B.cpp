@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <bits/stdc++.h>
-#include <cstdlib>
 using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
@@ -49,19 +48,39 @@ void solve(int t){
     int n; 
     cin >> n;
 
-    int k = n/2;
-    vector<int> a(n,0);
-    for(int i = 0; i < n; i+=2){
-        a[i] = ++k;
-    }
+    string s; 
+    cin >> s;
 
-    k = n/2;
-    for(int i = 1; i < n; i+=2){
-        a[i] = k--;
-    }
+    int ans = count(all(s), '1');
+	
+	int i = 0;
 
-    print(a);
-    
+	while(i < n){
+		if(s[i] == '1'){
+			i++;
+		} else {
+			int l = i;
+			while(i < n && s[i] == '0') i++;
+			int len = i - l;
+
+			bool x = (l == 0);
+			bool y = (i == n);
+
+			int count = 0;
+
+			if(x && y){
+				count = (len + 2) / 3;
+			} else if(x || y){
+				count = (len + 1) / 3;
+			} else {
+				count = len / 3;
+			}
+
+			ans += count;
+		}
+	}  
+
+	cout << ans << endl;
 }
 
 signed main(){

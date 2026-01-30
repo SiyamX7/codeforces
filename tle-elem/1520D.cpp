@@ -1,6 +1,4 @@
-#include <algorithm>
 #include <bits/stdc++.h>
-#include <cstdlib>
 using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
@@ -49,19 +47,20 @@ void solve(int t){
     int n; 
     cin >> n;
 
-    int k = n/2;
-    vector<int> a(n,0);
-    for(int i = 0; i < n; i+=2){
-        a[i] = ++k;
+    /* 
+		a[j] - a[i] = j - i;
+		a[j] - j = a[i] - i;
+    */
+
+    map<int,int> freq;
+    int ans = 0;
+    for(int i = 0; i < n; i++){
+    	int x; 
+    	cin >> x;
+    	ans += freq[x - i]++;
     }
 
-    k = n/2;
-    for(int i = 1; i < n; i+=2){
-        a[i] = k--;
-    }
-
-    print(a);
-    
+    cout << ans << endl;
 }
 
 signed main(){

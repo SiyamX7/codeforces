@@ -1,6 +1,4 @@
-#include <algorithm>
 #include <bits/stdc++.h>
-#include <cstdlib>
 using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
@@ -21,7 +19,7 @@ static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
 #define pb push_back
 #define eb emplace_back
 #define f first
-#define s second
+// #define s second
 
 const int INF = 4e18;
 const int MOD = 1e9+7;
@@ -45,23 +43,32 @@ template<class T> void print(const vector<vector<T>>&v){ for(auto &r:v){ for(aut
 i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,i=1; for(;i<sz(s);i++) x=x*10+(s[i]-'0'); return x*sg; }
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
-void solve(int t){
+void solve(){
     int n; 
     cin >> n;
+    string s, t;
+    cin >> s >> t;
 
-    int k = n/2;
-    vector<int> a(n,0);
-    for(int i = 0; i < n; i+=2){
-        a[i] = ++k;
-    }
-
-    k = n/2;
-    for(int i = 1; i < n; i+=2){
-        a[i] = k--;
-    }
-
-    print(a);
+    s.pb('#');
+    t.pb('#');
     
+    int count = 0;
+    for(int i = 0; i < n; i++){
+    	count += (s[i] == '1');
+    	count -= (s[i] == '0');
+
+    	bool curr = (s[i] == t[i]);
+    	bool next = (s[i+1] == t[i+1]);
+
+    	if(curr == next || count == 0){
+    		continue;
+    	}
+
+    	no;
+    	return;
+    }
+
+    yes;
 }
 
 signed main(){
@@ -69,7 +76,7 @@ signed main(){
     int T=1; 
     cin>>T;
     for(int t = 1;t <= T;t++){
-        solve(t);
+        solve();
     }
 
     return 0;

@@ -1,6 +1,4 @@
-#include <algorithm>
 #include <bits/stdc++.h>
-#include <cstdlib>
 using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
@@ -48,20 +46,24 @@ void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; stri
 void solve(int t){
     int n; 
     cin >> n;
-
-    int k = n/2;
-    vector<int> a(n,0);
-    for(int i = 0; i < n; i+=2){
-        a[i] = ++k;
+    vector<pair<int,int>> a(n);
+    for(int i = 0; i < n; i++){
+        cin >> a[i].f;
+        a[i].s = i+1;
     }
 
-    k = n/2;
-    for(int i = 1; i < n; i+=2){
-        a[i] = k--;
-    }
+    sort(a.begin(), a.end());
+    int ans = 0;
 
-    print(a);
-    
+	for(int i = 0; i < n; i++){
+		for(int j = i+1; j < n && a[i].f * a[j].f <= 2*n ; j++){
+			if(a[i].f * a[j].f == a[i].s + a[j].s){
+				ans++;
+			}
+		}
+	}
+
+	cout << ans << endl;
 }
 
 signed main(){

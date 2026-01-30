@@ -1,6 +1,4 @@
-#include <algorithm>
 #include <bits/stdc++.h>
-#include <cstdlib>
 using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
@@ -46,22 +44,33 @@ i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
 void solve(int t){
+	// test;
     int n; 
     cin >> n;
+    vector<int> a(n), b(n);
+    for(int &x:a) cin >> x;
 
-    int k = n/2;
-    vector<int> a(n,0);
-    for(int i = 0; i < n; i+=2){
-        a[i] = ++k;
-    }
+    b = a;
+    sort(all(b));
+	if(a == b){
+		cout << 0 << endl;
+		return;
+	}
 
-    k = n/2;
-    for(int i = 1; i < n; i+=2){
-        a[i] = k--;
-    }
+	if(a[n-2] > a[n-1]){
+		cout << -1 << endl;
+		return;
+	}
 
-    print(a);
-    
+	if(a[n-1] >= 0){
+		cout << n - 2 << endl;
+
+		for(int i = 1; i <= n-2; i++){
+			cout << i << " " << n-1 << " " << n << endl;
+		}
+	} else {
+		cout << -1 << endl;
+	}
 }
 
 signed main(){
