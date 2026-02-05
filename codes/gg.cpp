@@ -1,67 +1,59 @@
 #include <bits/stdc++.h>
+#include <climits>
+#include <unordered_map>
 using namespace std;
 
-void solve(){
-    
-    int k, a, b;
-    cin >> k >> a >> b;
-    vector<int> v(a), vv(b);
+#define ll long long
+#define pb push_back
+#define eb emplace_back
+#define bug(x) cerr << #x << " = " << x << endl
 
-    for(int i = 0; i < a; i++) cin >> v[i];
-   	for(int i = 0; i < b; i++) cin >> vv[i];
+#define rem(v,x) (v).erase(remove((v).begin(), (v).end(), (x)), (v).end())
+#define leftrotate(v,k) rotate((v).begin(), (v).begin() + ((k) % (v).size()), (v).end())
+#define rightrotate(v,k) rotate((v).begin(), (v).end() - ((k) % (v).size()), (v).end())
+#define popcount(x) __builtin_popcount(x)
+#define popcountll(x) __builtin_popcountll(x)
+#define lz(x) __builtin_clz(x)
+#define lzll(x) __builtin_clzll(x)
+#define tz(x) __builtin_ctz(x)
+#define tzll(x) __builtin_ctzll(x)
 
-   	vector<int> ans;
+void fast() { ios::sync_with_stdio(0); cin.tie(0); cout.tie(0); }
+template <typename T>
+void print(const vector<T>& vec) { for (const auto& val : vec) cout << val << " "; cout << endl; }
 
-   	int mn = min(a,b);
-   	int mx = max(a,b);
+unordered_map<ll,ll> mp;
 
-   	int i = 0;
-   	while(i != mn){
-   		if(v[i] == 0) ans.push_back(0), k++;
-   		if(vv[i] == 0) ans.push_back(0), k++;
-   		if(v[i] > k || vv[i] > k) {
-   			cout << -1 << endl;
-   			return;
-   		}
-   		if(v[i] != 0) ans.push_back(v[i]);
-   		if(vv[i] != 0) ans.push_back(vv[i]);
+int dfs(int n, int k){
+    if(n == k) return 0;
+    if(n < k) return INT_MAX;
 
-   		i++;
-   		// cout << i << " ";
-   	}
-   	// cout << k;
-   	if(a > b){
-   		for(int j = i; j < mx; j++){
-   			if(v[i] == 0) ans.push_back(0),k++;
-   			else if(v[i] > k){
-   				cout << -1 << endl;
-   				return;
-   			} else {
-   				ans.push_back(v[i]);
-   			}
-   		}
-   	} else if(a < b){
-   		for(int j = i; j < mx; j++){
-   			if(vv[i] == 0) ans.push_back(0),k++;
-   			else if(vv[i] > k){
-   				cout << -1 << endl;
-   				return;
-   			} else {
-   				ans.push_back(vv[i]);
-   			}
-   		}
-   	}
+    if(mp.count(n)) return mp[n];
 
-   	for(int i : ans) cout << i << " ";
-   	cout << endl;
+    int a = dfs(n/2, k);
+    int b = dfs(n - n/2, k);
+
+    int ans = INT_MAX;
+    if(a != INT_MAX) ans = min(ans, a+1);
+    if(b != INT_MAX) ans = min(ans, b+1);
+
+    return mp[n] = ans;
 }
 
-int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    int t;
+void solve() {
+    int n, k;
+    cin >> n >> k;
+
+    mp.clear();
+    int ans = dfs(n,k);
+    if (ans == INT_MAX) cout << -1 << endl;
+    else cout << ans << endl;
+}
+
+int main() {
+    fast();
+    int t = 1;
     cin >> t;
-    while(t--){
-    	solve();
-    }
-}   
+    while (t--) solve();
+}
+    

@@ -38,3 +38,4 @@ int main(){
 	cout << MEX(v) << endl;
 	cout << Mex(v) << endl;
 }   
+
