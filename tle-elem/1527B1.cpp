@@ -1,5 +1,5 @@
+#include <algorithm>
 #include <bits/stdc++.h>
-#include <string>
 using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
@@ -45,47 +45,23 @@ i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
 void solve(int t){
+	// test;
     int n; 
     cin >> n;
     string s;
     cin >> s;
 
-    string ans = "";
+    int cnt = count(s.begin(), s.end(), '0');
 
-    for(char x = 'a'; x <= 'z'; x++){
-        if(s.find(x) == string::npos){
-            cout << x << endl;
-            return;
-        }
+    if(cnt && cnt % 2 == 0 || cnt == 1){
+    	cout << "BOB" << endl;
+    	return;
     }
 
-    for(char x = 'a'; x <= 'z'; x++){
-        for(char y = 'a'; y <= 'z'; y++){
-            string tmp = "";
-            tmp.pb(x);
-            tmp.pb(y);
-
-            if(s.find(tmp) == string::npos){
-                cout << tmp << endl;
-                return;
-            }
-        }
-    }
-
-    for(char x = 'a'; x <= 'z'; x++){
-        for(char y = 'a'; y <= 'z'; y++){
-            for(char z = 'a'; z <= 'z'; z++){
-                string tmp = "";
-                tmp.pb(x);
-                tmp.pb(y);
-                tmp.pb(z);
-
-                if(s.find(tmp) == string::npos){
-                    cout << tmp << endl;
-                    return;
-                }
-            }
-        }
+    if(!cnt){
+    	cout << "DRAW" << endl;
+    } else {
+    	cout << "ALICE" << endl;
     }
 }
 
