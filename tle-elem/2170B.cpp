@@ -44,47 +44,31 @@ i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
 void solve(int _){
-    int n, x; 
-    cin >> n >> x;
-    vector<int> a(n), ans;
+    int n; 
+    cin >> n;
+    vector<int> a(n);
     for(int &x : a) cin >> x;
-    sort(all(a));
 
-    int p = 0, sum = 0, lvl = 0;
-    int l = 0, r = n-1;
+    int sum = accumulate(all(a),0LL);
+	int cnt = 0;
+	for(int x : a){
+		if(x > 0) cnt++;
+	}
 
-    while(l <= r){
-        int s = sum + a[l];
-        int t = sum + a[r];
+	// sum >= len x 1 + (n-1) x 1
+	// sum >= len + n - 1
+	// len >= sum - n + 1
 
-        if(t / x > lvl){
-            sum += a[r];
-            p += a[r];
-            ans.pb(a[r]);
-            lvl++;
-            r--;
-        } else {
-            sum += a[l];
-            ans.pb(a[l]);
-            if(sum / x > lvl){
-                p += a[l];
-                lvl++;
-            }
-            l++;
-        }
-    } 
-    cout << p << endl;
-    print(ans);
-
+	cout << min(cnt, llabs(sum - n + 1));
 }
 
 signed main(){
     fast();
-    int __ = 1; 
-    cin >> __;
-    for(int _ = 1; _  <= __ ; _++){
+    int T = 1; 
+    cin >> T;
+    for(int _ = 1; _ <= T; _++){
         solve(_);
-        // cout << endl;
+        cout << endl;
     }
 
     return 0;
