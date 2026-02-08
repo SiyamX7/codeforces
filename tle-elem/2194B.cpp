@@ -44,11 +44,28 @@ i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
 void solve(int t){
-    int n, k;
-    cin >> n >> k;
-    k--;
+    int n, x, y;
+    cin >> n >> x >> y;
+    vector<int> a(n), move(n);
 
-    cout << (k + (n % 2) * (k / (n / 2))) % n + 1 << endl;
+    for(int i = 0; i < n; i++) cin >> a[i]; 
+
+    for(int i = 0; i < n; i++){
+    	int diff = x - y;
+    	int div = a[i] / x;
+
+    	move[i] = div * x - div * diff;
+    }
+
+    int sum = accumulate(all(move), 0LL);
+    int ans = 0;
+
+    for(int i = 0; i < n; i++){
+    	int temp = sum - move[i] + a[i];
+    	ans = max(ans, temp);
+    }
+
+    cout << ans << endl;
 }
 
 signed main(){
@@ -61,3 +78,4 @@ signed main(){
 
     return 0;
 }
+    

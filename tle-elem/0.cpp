@@ -1,21 +1,39 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
+void solve(){
+    int n, k;
+    cin >> n >> k;
 
-#define int long long
+    vector<int> mask(n,0);
+    for(int i = 0; i < k ; i++){
+        string s;
+        cin >> s;
 
-const int INF = 4e18;
-const int MOD = 1e9+7;
-
-
-
-signed main() {
-    fast();
-    int T;
-    cin >> T;
-    for (int t = 1; t <= T; t++) {
-        solve(t);
+        for(int j = 0; j < n; j++){
+            int x = s[j] - 'a';
+            mask[j] |= (1 << x);
+        }
     }
-    return 0;
+
+    vector<int> div;
+    for(int i = 1; i * i <= n; i++){
+        if(n % i == 0) {
+            div.push_back(i);
+            if(i * i != n) div.push_back(n/i);
+        }
+    }
+
+    sort(div.begin(), div.end());
 }
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int t;
+    cin >> t;
+    while(t--){
+        solve();
+    }
+}   

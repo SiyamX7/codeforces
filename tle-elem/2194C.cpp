@@ -3,7 +3,7 @@ using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
 
-#define int long long
+// #define int long long
 #define i128 __int128_t
 #define u128 __uint128_t
 #define all(x) (x).begin(), (x).end()
@@ -21,8 +21,8 @@ static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
 #define f first
 #define s second
 
-const int INF = 4e18;
-const int MOD = 1e9+7;
+// const int INF = 4e18;
+// const int MOD = 1e9+7;
 
 /* ================= UTILS ================= */
 template<class T> void uniq(vector<T>&v){ sort(all(v)); v.erase(unique(all(v)),v.end()); }
@@ -46,9 +46,62 @@ void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; stri
 void solve(int t){
     int n, k;
     cin >> n >> k;
-    k--;
 
-    cout << (k + (n % 2) * (k / (n / 2))) % n + 1 << endl;
+    vector<int> mask(n, 0);
+    for (int i = 0; i < k; i++) {
+        string s;
+        cin >> s;
+        for (int j = 0; j < n; j++) {
+            mask[j] |= (1 << (s[j] - 'a'));
+        }
+    }
+
+    vector<int> div;
+    for (int d = 1; d * d <= n; ++d) {
+        if (n % d == 0) {
+            div.pb(d);
+            if (d * d != n) div.pb(n / d);
+        }
+    }
+
+    sort(all(div));
+
+    for (int x : div) {
+        string p = "";
+        bool ok = true;
+
+        for (int j = 0; j < x; j++){
+            int cmn = (1 << 26) - 1;
+
+            for (int pos = j; pos < n; pos += x) {
+                cmn &= mask[pos];
+            }
+
+            if (cmn == 0) {
+                ok = false;
+                break;
+            } else {
+
+                for (int c = 0; c < 26; c++) {
+                    if ((cmn >> c) & 1) {
+                        p += (char)('a' + c);
+                        break;
+                    }
+                }
+                
+            }
+        }
+
+        if (ok) {
+            for (int i = 0; i < n / x; ++i) {
+                cout << p;
+            }
+
+            cout << endl;
+            return;
+        }
+    }
+    
 }
 
 signed main(){
@@ -61,3 +114,4 @@ signed main(){
 
     return 0;
 }
+    

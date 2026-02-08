@@ -13,9 +13,9 @@ static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
 #define clz(x) __builtin_clzll(x)
 #define ctz(x) __builtin_ctzll(x)
 #define endl '\n'
-#define yes cout<<"YES\n"
-#define no  cout<<"NO\n"
-#define test cout<<"Test #"<<t<<":\n"
+#define yes cout << "YES\n"
+#define no  cout << "NO\n"
+#define test cout << "Test #" << _ << ":\n"
 #define pb push_back
 #define eb emplace_back
 #define f first
@@ -43,21 +43,56 @@ template<class T> void print(const vector<vector<T>>&v){ for(auto &r:v){ for(aut
 i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,i=1; for(;i<sz(s);i++) x=x*10+(s[i]-'0'); return x*sg; }
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
-void solve(int t){
-    int n, k;
-    cin >> n >> k;
-    k--;
+void solve(int _){
+    string s, t;
+    cin >> s >> t;
 
-    cout << (k + (n % 2) * (k / (n / 2))) % n + 1 << endl;
+    vector<int> freq(26,0);
+    for(char c : t){
+    	freq[c - 'a']++;
+    }
+
+    for(char c : s){
+    	freq[c - 'a']--;
+    }
+
+    string temp = "";
+    for(int i = 0; i < freq.size(); i++){
+    	if(freq[i] < 0){
+    		cout << "Impossible" << endl;
+    		return;
+    	}
+
+		if(freq[i] > 0)
+		   	temp += string(freq[i] , 'a'+i);
+    }
+
+    string ans = "";
+
+    int j = 0;
+    for(int i = 0; i < temp.size(); ){
+    	if(j < s.size() && s[j] <= temp[i]){
+    		ans += s[j];
+    		j++;
+    	} else {
+    		ans += temp[i];
+    		i++;
+    	}
+    }
+
+    if(j < s.size()) while(j < s.size()) ans += s[j++];
+    cout << ans;
 }
 
 signed main(){
     fast();
-    int T=1; 
-    cin>>T;
-    for(int t = 1;t <= T;t++){
-        solve(t);
+    int T = 1; 
+    cin >> T;
+    for(int _ = 1; _ <= T; _++){
+        solve(_);
+        cout << endl;
     }
 
     return 0;
 }
+    

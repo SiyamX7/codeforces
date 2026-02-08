@@ -44,11 +44,40 @@ i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
 void solve(int t){
-    int n, k;
-    cin >> n >> k;
-    k--;
+    int n; 
+    cin >> n;
+    vector<vector<int>> a(n, vector<int> (n));
+    set<int> s;
 
-    cout << (k + (n % 2) * (k / (n / 2))) % n + 1 << endl;
+    for(int i = 0; i < n; i++){
+    	for(int j = 0; j < n; j++){
+    		int x;
+    		cin >> x;
+    		a[i][j] = x;;
+    		s.insert(x);
+    	}
+    }
+
+    vector<int> ans(2*n+1, 0);
+
+    for(int i = 0; i < n; i++){
+    	for(int j = 0; j < n; j++){
+    		if(i+j+2 < 2*n+1)
+    			ans[i+j+2] = a[i][j];
+    	}
+    }
+
+    for(int i = 1; i <= 2*n; i++){
+    	if(!s.count(i)){
+    		ans[1] = i;
+    		break;
+    	}
+    }
+
+    for(int i = 1; i < 2*n+1; i++){
+    	cout << ans[i] << " ";
+    }
+    
 }
 
 signed main(){
@@ -57,7 +86,9 @@ signed main(){
     cin>>T;
     for(int t = 1;t <= T;t++){
         solve(t);
+        cout << endl;
     }
 
     return 0;
 }
+    

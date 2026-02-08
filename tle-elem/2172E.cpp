@@ -13,9 +13,9 @@ static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
 #define clz(x) __builtin_clzll(x)
 #define ctz(x) __builtin_ctzll(x)
 #define endl '\n'
-#define yes cout<<"YES\n"
-#define no  cout<<"NO\n"
-#define test cout<<"Test #"<<t<<":\n"
+#define yes cout << "YES\n"
+#define no  cout << "NO\n"
+#define test cout << "Test #" << _ << ":\n"
 #define pb push_back
 #define eb emplace_back
 #define f first
@@ -43,21 +43,80 @@ template<class T> void print(const vector<vector<T>>&v){ for(auto &r:v){ for(aut
 i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,i=1; for(;i<sz(s);i++) x=x*10+(s[i]-'0'); return x*sg; }
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
-void solve(int t){
-    int n, k;
-    cin >> n >> k;
-    k--;
+vector<vector<int>> two, three, four;
 
-    cout << (k + (n % 2) * (k / (n / 2))) % n + 1 << endl;
+void solve(int _){
+    int n, j, k;
+    cin >> n >> j >> k;
+    vector<int> s, t;
+
+    if(n == 12){
+    	s = two[j-1];
+    	t = two[k-1];
+    }
+
+    if(n == 123){
+    	s = three[j-1];
+    	t = three[k-1];
+    }
+
+    if(n == 1234){
+    	s = four[j-1];
+    	t = four[k-1];
+    }
+
+    int x = 0, y = 0;
+    for(int i = 0; i < s.size(); i++){
+    	for(int j = 0; j < t.size(); j++){
+    		if(i == j && s[i] == t[j]){
+    			x++;
+    		}
+
+    		if(i != j && s[i] == t[j]){
+    			y++;
+    		}
+    	}
+    }
+
+   	cout << x << "A" << y << "B";
 }
 
 signed main(){
     fast();
-    int T=1; 
-    cin>>T;
-    for(int t = 1;t <= T;t++){
-        solve(t);
+
+    vector<vector<int>> a = {{1,2},{1,2,3},{1,2,3,4}};
+
+    for(int i = 0; i < 3; i++){
+    	if(i == 0){
+    		do{
+    			two.pb(a[i]);
+    		}while(next_permutation(all(a[i])));
+    	}
+
+    	if(i == 1){
+    		do{
+    			three.pb(a[i]);
+    		}while(next_permutation(all(a[i])));
+    	}
+    	
+    	if(i == 2){
+    		do{
+    			four.pb(a[i]);
+    		}while(next_permutation(all(a[i])));
+    	}    	
+    }
+
+    // print(two);
+    // print(three);
+    // print(four);
+
+    int T = 1; 
+    cin >> T;
+    for(int _ = 1; _ <= T; _++){
+        solve(_);
+        cout << endl;
     }
 
     return 0;
 }
+    

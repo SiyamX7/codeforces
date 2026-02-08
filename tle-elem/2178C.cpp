@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -44,11 +45,31 @@ i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
 void solve(int t){
-    int n, k;
-    cin >> n >> k;
-    k--;
+	// test;
+    int n; 
+    cin >> n;
+    vector<int> a(n);
+    for(int &x:a) cin >> x;
 
-    cout << (k + (n % 2) * (k / (n / 2))) % n + 1 << endl;
+    vector<int> pref(n+1), suff(n+1);
+	
+	for(int i = 0; i < n-1; i++){
+		int val = ( i == 0 ? a[i] : llabs(a[i]) );
+		pref[i+1] = pref[i] + val;
+	}
+
+	for(int i = n-1; i >= 1; i--){
+		suff[i] = suff[i+1] - a[i];
+	}
+
+    int ans = -INF;
+
+    for(int i = 1; i <= n; i++){
+    	int curr = pref[i-1] + suff[i];
+    	ans = max(ans,curr);
+    }
+
+    cout << ans << endl;
 }
 
 signed main(){
@@ -61,3 +82,4 @@ signed main(){
 
     return 0;
 }
+    

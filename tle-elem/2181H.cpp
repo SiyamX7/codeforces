@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -44,20 +45,46 @@ i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
 void solve(int t){
-    int n, k;
-    cin >> n >> k;
-    k--;
+    int w, h, d, n;
+    cin >> w >> h >> d >> n;
 
-    cout << (k + (n % 2) * (k / (n / 2))) % n + 1 << endl;
+    vector<int> divs;
+    for(int i = 1; i * i <= n; i++){
+    	if(n % i == 0){
+    		divs.pb(i);
+    		if(i != n/i) divs.pb(n/i);
+    	}
+    }   
+
+    sort(all(divs));
+
+    for(int x : divs){
+    	if(w % x != 0) continue;
+
+    	for(int y : divs){
+    		if(h % y != 0) continue;
+    		if(n % (x * y) != 0) continue;
+
+    		int z = n / (x * y);
+
+    		if(d % z == 0){
+    			cout << x -1 << " " << y -1 << " " << z -1 << endl;
+    			return;
+    		}
+    	}
+    } 
+
+    cout << -1 << endl;
 }
 
 signed main(){
     fast();
     int T=1; 
-    cin>>T;
+    // cin>>T;
     for(int t = 1;t <= T;t++){
         solve(t);
     }
 
     return 0;
 }
+    

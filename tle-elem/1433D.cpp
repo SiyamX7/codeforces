@@ -44,11 +44,35 @@ i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
 void solve(int t){
-    int n, k;
-    cin >> n >> k;
-    k--;
+	// test;
+    int n; 
+    cin >> n;
+    vector<int> a(n+1);
+    for(int i = 1; i <= n; i++) cin >> a[i];
 
-    cout << (k + (n % 2) * (k / (n / 2))) % n + 1 << endl;
+    vector<vector<int>> v(2);
+
+    for(int i = 1; i <= n; i++){
+    	if(a[i] == a[1]){
+    		v[0].pb(i);
+    	} else {
+    		v[1].pb(i);
+    	}
+    }
+
+    if(!v[0].size() || !v[1].size()){
+    	cout << "NO" << endl;
+    	return;
+    }
+
+    cout << "YES" << endl;
+    for(int i = 0; i < v[1].size(); i++){
+    	cout << v[0][0] << " " << v[1][i] << endl;
+    }
+
+    for(int i = 1; i < v[0].size(); i++){
+    	cout << v[1][0] << " " << v[0][i] << endl;
+    }
 }
 
 signed main(){
@@ -61,3 +85,4 @@ signed main(){
 
     return 0;
 }
+    
