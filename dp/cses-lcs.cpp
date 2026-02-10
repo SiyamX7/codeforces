@@ -40,3 +40,6 @@ int main(){
 	reverse(begin(ans), end(ans));
 	for(int x : ans) cout << x << " ";
 }   
+
+
+2 3 3 1 2 3 5 1 1 7

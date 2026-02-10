@@ -27,5 +27,6 @@ int main(){
         }
     }
 
+    reverse(dp.begin(), dp.end());
     cout << dp[k];
 }   
