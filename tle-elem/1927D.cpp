@@ -1,5 +1,6 @@
+#include <algorithm>
 #include <bits/stdc++.h>
-#include <cmath>
+#include <utility>
 using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
@@ -21,6 +22,7 @@ static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
 #define eb emplace_back
 #define f first
 #define s second
+#define mp make_pair
 
 const int INF = 4e18;
 const int MOD = 1e9+7;
@@ -44,25 +46,42 @@ template<class T> void print(const vector<vector<T>>&v){ for(auto &r:v){ for(aut
 i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,i=1; for(;i<sz(s);i++) x=x*10+(s[i]-'0'); return x*sg; }
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
-
+map<pair<int,int>,pair<int,int>> dp;
 
 void solve(int _){
     int n; 
     cin >> n;
     vector<int> a(n+1);
     for(int i = 1; i <= n; i++) cin >> a[i];
+    set<int> diff;
+	for(int i = 1; i+1 <= n; i++){
+		if(a[i] != a[i+1])
+			diff.insert(i);
+	}
 
-    int B = sqrt(n) + 1;
+    int q;
+	cin >> q;
+	while(q--){
+		int l, r;
+		cin >> l >> r;
+		auto it = diff.lower_bound(l);
 
-    vector<int> L, R;
-    for(int i = 1; i <= n; i++){
-        if(a[i] <= B) 
-            L.pb(a[i]);
-        else
-            R.pb(a[i]);
-    }    
+		bool ok = true;
+		if(it == diff.end()){
+			ok = false;
+		} else {
+			int x = *it;
+			if(x+1 > r){
+				ok = false;
+			}
+		}
 
-    
+		if(ok){
+			cout << l << " " << *it+1 << endl;
+		} else {
+			cout << -1 << " " << -1 << endl;
+		}
+	}
 }
 
 signed main(){

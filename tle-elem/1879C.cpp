@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <cmath>
 using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
@@ -22,9 +21,6 @@ static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
 #define f first
 #define s second
 
-const int INF = 4e18;
-const int MOD = 1e9+7;
-
 /* ================= UTILS ================= */
 template<class T> void uniq(vector<T>&v){ sort(all(v)); v.erase(unique(all(v)),v.end()); }
 template<class T> void remVAL(vector<T>&v,T x){ v.erase(remove(all(v),x),v.end()); }
@@ -44,33 +40,48 @@ template<class T> void print(const vector<vector<T>>&v){ for(auto &r:v){ for(aut
 i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,i=1; for(;i<sz(s);i++) x=x*10+(s[i]-'0'); return x*sg; }
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
+const int INF = 4e18;
+const int MOD = 998244353;
+const int MAX = 200005;
+int f[MAX];
 
+void fact(){
+	f[0] = f[1] = 1;
+	for(int i = 2; i < MAX; i++){
+		f[i] = (f[i-1] * i) % MOD;
+	}
+}
 
 void solve(int _){
-    int n; 
-    cin >> n;
-    vector<int> a(n+1);
-    for(int i = 1; i <= n; i++) cin >> a[i];
+    string s;
+    cin >> s;
 
-    int B = sqrt(n) + 1;
+    int n = s.size();
+    int a = 0, b = 1;
 
-    vector<int> L, R;
-    for(int i = 1; i <= n; i++){
-        if(a[i] <= B) 
-            L.pb(a[i]);
-        else
-            R.pb(a[i]);
-    }    
+    for(int i = 0; i < n; ){
+    	char c = s[i];
+    	int j = i;
 
-    
+    	while(i < n && s[i] == c) i++;
+    	
+    	int len = i - j;
+    	a += len - 1;
+    	b = (b * len) % MOD;
+    }
+
+    b = (b * f[a]) % MOD;
+
+    cout << a << " " << b;
 }
 
 signed main(){
     fast();
-    int __ = 1; 
-    cin >> __;
-    for(int _ = 1; _  <= __ ; _++){
-        solve(_);
+    fact();
+    int tc = 1; 
+    cin >> tc;
+    for(int t = 1; t <= tc ; t++){
+        solve(t);
         cout << endl;
     }
 

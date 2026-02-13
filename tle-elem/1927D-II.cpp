@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <cmath>
 using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
@@ -44,24 +43,31 @@ template<class T> void print(const vector<vector<T>>&v){ for(auto &r:v){ for(aut
 i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,i=1; for(;i<sz(s);i++) x=x*10+(s[i]-'0'); return x*sg; }
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
-
-
 void solve(int _){
     int n; 
     cin >> n;
-    vector<int> a(n+1);
-    for(int i = 1; i <= n; i++) cin >> a[i];
+    vector<int> a(n);
+    for(int i = 0; i < n; i++) cin >> a[i];
+    vector<int> prev(n,-1);
 
-    int B = sqrt(n) + 1;
+	for(int i = 1; i < n; i++){
+		if(prev[i-1] != prev[i]){
+			prev[i] = i;
+		} else {
+			prev[i] = prev[i-1];
+		}
+	}
+	
 
-    vector<int> L, R;
-    for(int i = 1; i <= n; i++){
-        if(a[i] <= B) 
-            L.pb(a[i]);
-        else
-            R.pb(a[i]);
-    }    
-
+	print(prev);
+	int q;
+	cin >> q;
+	while(q--){
+		int l, r;
+		cin >> l >> r;
+		l--, r--;
+		
+	}
     
 }
 
