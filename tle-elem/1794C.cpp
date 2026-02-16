@@ -43,44 +43,33 @@ void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; stri
 const int INF = 4e18;
 const int MOD = 1e9+7;
 const int MAX = 200005;
+i128 f[MAX];
+
+void fact(){
+	f[0] = f[1] = 1;
+	for(int i = 2; i < MAX; i++){
+		f[i] =(i128) i * f[i-1];
+	}
+}
 
 void solve(int _){
-    int n;
-    cin >> n;
-    vector<int> f(n + 1), a(n + 1), d(n);
+    // int n; 
+    // cin >> n;
+    // vector<int> a(n), ans(n);
+    // for(int i = 0; i < n; i++) cin >> a[i];
 
-    for(int i = 1; i <= n; i++) cin >> f[i];
 
-    for(int i = 1; i < n; i++){
-    	d[i] = f[i+1] - f[i];
+    for(int i = 0; i < MAX; i++){
+    	print(f[i]);
     }
 
-    for(int i = 2; i < n; i++){
-    	a[i] = (d[i] - d[i-1]) / 2;
-    }
-
-    int sum = 0;
-    for(int i = 2; i < n; i++){
-    	sum += (i-1) * a[i];
-    } 
-
-    a[n] = f[1] - sum;
-    a[n] /= (n-1);
     
-    a[1] = d[1];
-    for(int i = 2; i <= n; i++){
-    	a[1] += a[i];
-    }
-
-    for(int i = 1; i <= n; i++){
-    	cout << a[i] << " ";
-    }
 }
 
 signed main(){
     fast();
     int tc = 1; 
-    cin >> tc;
+    // cin >> tc;
     for(int t = 1; t <= tc ; t++){
         solve(t);
         cout << endl;
