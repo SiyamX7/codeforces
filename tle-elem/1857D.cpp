@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -43,38 +44,28 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    int n, x, y;
-    cin >> n >> x >> y;
-    vector<int> a(n);
+    int n; 
+    cin >> n;
+    vector<int> a(n), b(n), d(n);
     for(int i = 0; i < n; i++) cin >> a[i];
+    for(int i = 0; i < n; i++) cin >> b[i];
 
-    map<int, vector<int>> mp;
-	
-	for(int val : a){
-		mp[val % y].pb(val);
+	int mx = -INF;
+
+	for(int i = 0; i < n; i++){
+		d[i] = a[i] - b[i];
+		mx = max (mx,d[i]);
 	}
 
-	int ans = 0;
-
-	for(auto [k,v] : mp){
-		map<int,int> m;
-
-		for(int val : v){
-			m[val % x]++;
-		}
-
-		for(auto &it : m){
-			if(it.first == 0 || (it.first == x/2 && x % 2 == 0)){
-				ans += (it.second * (it.second -1)) / 2;
-			} else {
-				ans += it.second * m[x - it.first];
-			}
-			
-			it.second = 0;
+	vector<int> ans;
+	for(int i = 0; i < n; i++){
+		if(d[i] == mx){
+			ans.pb(i+1);
 		}
 	}
 
-	cout << ans;
+	cout << ans.size() << endl;
+	print(ans);
 }
 
 signed main(){
@@ -83,7 +74,6 @@ signed main(){
     cin >> tc;
     for(int t = 1; t <= tc ; t++){
         solve(t);
-        cout << endl;
     }
 
     return 0;

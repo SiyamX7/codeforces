@@ -40,45 +40,69 @@ void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; stri
 
 const int INF = 4e18;
 const int MOD = 1e9+7;
-const int MAX = 200005;
+const int MAX = 1000000+10;
+
+
+vector<int> primes, spf;
+
+void LSIEVE(int n){
+    spf.assign(n + 1, 0);
+
+    for(int i = 2; i <= n; i++){
+        if(spf[i] == 0){
+            spf[i] = i;
+            primes.push_back(i);
+        }
+        for(int p : primes){
+            if(p > spf[i] || (long long)i * p > n) break;
+            spf[i * p] = p;
+        }
+    }
+}
+
+vector<int> primeFactors(int x){
+	vector<int> v;
+
+	while(x > 1){
+		v.push_back(spf[x]);
+		x /= spf[x];
+	}
+
+	return v;
+}
 
 void solve(int _){
-    int n, x, y;
-    cin >> n >> x >> y;
+    int n; 
+    cin >> n;
     vector<int> a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
+    for(int i = 0; i < n; i++) {
+    	cin >> a[i];
+    }
 
-    map<int, vector<int>> mp;
-	
-	for(int val : a){
-		mp[val % y].pb(val);
-	}
+    map<int,int> f;
 
-	int ans = 0;
+    for(int i = 0; i < n; i++){
+    	vector<int> factors = primeFactors(a[i]);
+    	for(int x : factors){
+    		f[x]++;
+    	}
+    }
 
-	for(auto [k,v] : mp){
-		map<int,int> m;
+    for(auto[x , y] : f){
+    	if(y % n != 0){
+    		cout << "NO";
+    		return;
+    	}
+    }
 
-		for(int val : v){
-			m[val % x]++;
-		}
-
-		for(auto &it : m){
-			if(it.first == 0 || (it.first == x/2 && x % 2 == 0)){
-				ans += (it.second * (it.second -1)) / 2;
-			} else {
-				ans += it.second * m[x - it.first];
-			}
-			
-			it.second = 0;
-		}
-	}
-
-	cout << ans;
+    cout << "YES";
 }
 
 signed main(){
     fast();
+
+    LSIEVE(MAX);
+
     int tc = 1; 
     cin >> tc;
     for(int t = 1; t <= tc ; t++){

@@ -43,38 +43,51 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    int n, x, y;
-    cin >> n >> x >> y;
+    int n, h, k; 
+    cin >> n >> h >> k;
     vector<int> a(n);
+
     for(int i = 0; i < n; i++) cin >> a[i];
+    int sum = accumulate(all(a), 0LL);
+    
+    int mag = h / sum;
+    int rem = h % sum;
 
-    map<int, vector<int>> mp;
-	
-	for(int val : a){
-		mp[val % y].pb(val);
-	}
+    int ans = mag * (n + k);
 
-	int ans = 0;
+    if(!rem){
+        ans -= k;
+        cout << ans;
+        return;
+    }
 
-	for(auto [k,v] : mp){
-		map<int,int> m;
+    vector<int> pref(n+1,INF), suff(n+1, -INF), s(n+1);
 
-		for(int val : v){
-			m[val % x]++;
-		}
+    for(int i = 0; i < n; i++) {
+        pref[i+1] = min(pref[i], a[i]);
+        s[i+1] = s[i] + a[i];
+    }
 
-		for(auto &it : m){
-			if(it.first == 0 || (it.first == x/2 && x % 2 == 0)){
-				ans += (it.second * (it.second -1)) / 2;
-			} else {
-				ans += it.second * m[x - it.first];
-			}
-			
-			it.second = 0;
-		}
-	}
+    for(int i = n-1; i >= 0; i--){
+        suff[i] = max(suff[i+1], a[i]);
+    }  
 
-	cout << ans;
+    int res = n;
+
+    for(int i = 0; i < n; i++){
+        int tmp = s[i+1];
+        if(i+1 < n && pref[i+1] < suff[i+1]){
+            tmp -= pref[i+1];
+            tmp += suff[i+1];
+        }
+
+        if(tmp >= rem){
+            res = i+1;
+            break;
+        }
+    }
+
+    cout << ans + res;
 }
 
 signed main(){

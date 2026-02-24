@@ -43,38 +43,43 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    int n, x, y;
-    cin >> n >> x >> y;
-    vector<int> a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
+    int n; 
+    cin >> n;
+    string s;
+    cin >> s;
 
-    map<int, vector<int>> mp;
-	
-	for(int val : a){
-		mp[val % y].pb(val);
-	}
+    int one = count(all(s), '1');
+    int zero = llabs(n - one);
 
-	int ans = 0;
+    // cout << "zero " <<  zero << " one " << one << endl;
 
-	for(auto [k,v] : mp){
-		map<int,int> m;
+    if(zero == n){
+    	cout << 0 << endl;
+    	return;
+    } 
 
-		for(int val : v){
-			m[val % x]++;
-		}
+    if(n % 2 == 1 && one % 2 == 1){
+    	cout << -1 << endl;
+    	return;
+    }
 
-		for(auto &it : m){
-			if(it.first == 0 || (it.first == x/2 && x % 2 == 0)){
-				ans += (it.second * (it.second -1)) / 2;
-			} else {
-				ans += it.second * m[x - it.first];
-			}
-			
-			it.second = 0;
-		}
-	}
+    vector<int> res;
+    if(n % 2 == 0 && one % 2 == 1){
+    	for(int i = 0; i < n; i++){
+    		if(s[i] == '0') res.pb(i+1);
+    	} 
+    } else if(n % 2 == 1 && one % 2 == 0){
+    	for(int i = 0; i < n; i++){
+    		if(s[i] == '1') res.pb(i+1);
+    	}
+    } else if(n % 2 == 0 && one % 2 == 0){
+    	for(int i = 0; i < n; i++){
+    		if(s[i] == '1') res.pb(i+1);
+    	}   	
+    }
 
-	cout << ans;
+    cout << res.size() << endl;
+    print(res);
 }
 
 signed main(){
@@ -83,7 +88,7 @@ signed main(){
     cin >> tc;
     for(int t = 1; t <= tc ; t++){
         solve(t);
-        cout << endl;
+        // cout << endl;
     }
 
     return 0;

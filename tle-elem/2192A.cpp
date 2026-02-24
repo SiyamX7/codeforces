@@ -43,38 +43,26 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    int n, x, y;
-    cin >> n >> x >> y;
-    vector<int> a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
+    int n; 
+    cin >> n;
+    string s;
+    cin >> s;
+    int ans = 0;
 
-    map<int, vector<int>> mp;
-	
-	for(int val : a){
-		mp[val % y].pb(val);
-	}
+    int r = 0;
+    bool ok = false;
+    for(int i = 0; i < n; ){
+    	r = i;
+    	while(r < n && s[i] == s[r]) r++;
+    	int len = r - i;
+    	if(len >= 2) ok = true;
 
-	int ans = 0;
+    	i = r;
+    	ans++;
+    }    
 
-	for(auto [k,v] : mp){
-		map<int,int> m;
-
-		for(int val : v){
-			m[val % x]++;
-		}
-
-		for(auto &it : m){
-			if(it.first == 0 || (it.first == x/2 && x % 2 == 0)){
-				ans += (it.second * (it.second -1)) / 2;
-			} else {
-				ans += it.second * m[x - it.first];
-			}
-			
-			it.second = 0;
-		}
-	}
-
-	cout << ans;
+    if(ok && s[0] != s[n-1]) ans++;
+    cout << ans;
 }
 
 signed main(){

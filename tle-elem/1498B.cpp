@@ -13,6 +13,8 @@ static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
 #define clz(x) __builtin_clzll(x)
 #define ctz(x) __builtin_ctzll(x)
 #define endl '\n'
+#define yes cout << "YES\n"
+#define no  cout << "NO\n"
 #define test cout << "Test #" << _ << ":\n"
 #define pb push_back
 #define eb emplace_back
@@ -42,39 +44,33 @@ const int INF = 4e18;
 const int MOD = 1e9+7;
 const int MAX = 200005;
 
+
 void solve(int _){
-    int n, x, y;
-    cin >> n >> x >> y;
-    vector<int> a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
+    int n, w; 
+    cin >> n >> w;
+    multiset<int> s;
+    for(int i = 0; i < n; i++){
+    	int x;
+    	cin >> x;
+    	s.insert(x);
+    }
 
-    map<int, vector<int>> mp;
-	
-	for(int val : a){
-		mp[val % y].pb(val);
-	}
+    int ans = 0;
+    int rem = w;
 
-	int ans = 0;
+    while(!s.empty()){
+    	auto it = s.upper_bound(rem);
+    	if(it == s.begin()){
+    		ans++;
+    		rem = w;
+    	} else {
+    		--it;
+    		rem -= *it;
+    		s.erase(it);
+    	}
+    }
 
-	for(auto [k,v] : mp){
-		map<int,int> m;
-
-		for(int val : v){
-			m[val % x]++;
-		}
-
-		for(auto &it : m){
-			if(it.first == 0 || (it.first == x/2 && x % 2 == 0)){
-				ans += (it.second * (it.second -1)) / 2;
-			} else {
-				ans += it.second * m[x - it.first];
-			}
-			
-			it.second = 0;
-		}
-	}
-
-	cout << ans;
+    cout << ++ans;
 }
 
 signed main(){
@@ -89,3 +85,4 @@ signed main(){
     return 0;
 }
     
+
