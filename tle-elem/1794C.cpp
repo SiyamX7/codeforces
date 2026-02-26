@@ -13,8 +13,6 @@ static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
 #define clz(x) __builtin_clzll(x)
 #define ctz(x) __builtin_ctzll(x)
 #define endl '\n'
-#define yes cout << "YES\n"
-#define no  cout << "NO\n"
 #define test cout << "Test #" << _ << ":\n"
 #define pb push_back
 #define eb emplace_back
@@ -43,33 +41,37 @@ void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; stri
 const int INF = 4e18;
 const int MOD = 1e9+7;
 const int MAX = 200005;
-i128 f[MAX];
-
-void fact(){
-	f[0] = f[1] = 1;
-	for(int i = 2; i < MAX; i++){
-		f[i] =(i128) i * f[i-1];
-	}
-}
 
 void solve(int _){
-    // int n; 
-    // cin >> n;
-    // vector<int> a(n), ans(n);
-    // for(int i = 0; i < n; i++) cin >> a[i];
+    int n; 
+    cin >> n;
+    vector<int> a(n+1);
+    for(int i = 1; i <= n; i++) cin >> a[i];
 
+    vector<int> ans;
+	
+	for(int i = 1; i <= n; i++){
+		int l = 1, r = i;
 
-    for(int i = 0; i < MAX; i++){
-    	print(f[i]);
-    }
+		while(l <= r){
+			int m = (l + r) / 2;
 
-    
+			if(a[m] >= (i-m+1)){
+				r = m-1;
+			} else {
+				l = m+1;
+			}
+		}
+
+		ans.pb(i-l+1);
+	}
+	print(ans);
 }
 
 signed main(){
     fast();
     int tc = 1; 
-    // cin >> tc;
+    cin >> tc;
     for(int t = 1; t <= tc ; t++){
         solve(t);
         cout << endl;
