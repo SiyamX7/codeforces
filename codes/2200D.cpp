@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -43,7 +44,25 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    for(int i = 0; i < 100; i++) cout << "🫱🍑🫲" << endl;
+    int n, x , y;
+    cin >> n >> x >> y;
+    vector<int> p(n);
+    for(int i = 0; i < n; i++) cin >> p[i];
+
+    vector<int> a (p.begin()+x, p.begin()+y);
+	vector<int> b(p.begin(), p.begin()+x);
+	b.insert(b.end(), p.begin()+y, p.end());
+
+	auto it = min_element(a.begin(), a.end());
+	rotate(a.begin(), it, a.end());
+
+	int i = 0; 
+	while (i < sz(b) && b[i] < a[0]) {
+		i++;
+	}
+
+	b.insert(b.begin()+i, a.begin(), a.end());
+	print(b);
 }
 
 signed main(){
@@ -52,7 +71,6 @@ signed main(){
     cin >> tc;
     for(int t = 1; t <= tc ; t++){
         solve(t);
-        cout << endl;
     }
 
     return 0;

@@ -43,7 +43,29 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    for(int i = 0; i < 100; i++) cout << "🫱🍑🫲" << endl;
+   	int k, x;
+   	cin >> k >> x;
+
+    int l = 1, r = 2 * k - 1;
+    int ans = 0;
+
+    while(l < r){
+        int m = (l + r) / 2;
+
+        if(m <= k) {
+            ans = m * (m + 1) / 2;
+        } else {
+            ans = (k * k) - (2 * k - 1 - m) * (2 * k - m) / 2;
+        }
+
+        if(ans >= x){
+            r = m;
+        } else {
+            l = m + 1;
+        }
+    }
+
+    cout << r;
 }
 
 signed main(){
