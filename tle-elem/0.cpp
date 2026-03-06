@@ -1,4 +1,6 @@
+#include <algorithm>
 #include <bits/stdc++.h>
+#include <vector>
 using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
@@ -42,8 +44,47 @@ const int INF = 4e18;
 const int MOD = 1e9+7;
 const int MAX = 200005;
 
+bool ok(int c,int k, vector<int> &q, vector<int>&r){
+    if(c == 0) return true;
+
+    for(int i = 0; i < c; i++){
+        int j = c - 1 - i;
+        int val = q[i] * r[j] + q[i] + r[j];
+
+        if(val > k) return false;
+    }
+
+    return true;
+}
+
 void solve(int _){
-    for(int i = 0; i < 100; i++) cout << "🫱🍑🫲" << endl;
+    int n, k;
+    cin >> n >> k;
+    vector<int> q(n), r(n);
+    for(int i = 0; i < n; i++) cin >> q[i];    
+    for(int i = 0; i < n; i++) cin >> r[i];
+
+    sort(all(q));
+    sort(all(r));
+
+    // binary search kore dekhtesi je <mid> shonkhok pair ber kora jay kina
+    // val = q[i] * r[j] + q[i] + r[j]; ekhane q[i] and r[j] choose korar khetre ekta min hole arekta 
+    // max nitesi, karon ete val shohoje barbena, pair beshi howar chance ache
+
+    int left = 0, right = n, ans = 0;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if(ok(mid, k, q, r)){
+            ans = mid;
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+
+    cout << ans;
 }
 
 signed main(){
