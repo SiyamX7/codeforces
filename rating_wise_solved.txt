@@ -1,0 +1,47 @@
+Rating-wise solved problems in tle-elem folder:
+--------------------------------------------------
+Rating 800: 5 problems
+Rating 900: 20 problems
+Rating 1000: 30 problems
+Rating 1100: 39 problems
+Rating 1200: 47 problems
+Rating 1300: 17 problems
+Rating 1500: 2 problems
+Rating 1800: 1 problems
+Rating 1900: 1 problems
+Rating 2000: 1 problems
+--------------------------------------------------
+Total problems with ratings: 163
+
+Unrated or not found in problemset: 31
+  00.cpp
+  0.c
+  0.cpp
+  102961H.cpp
+  1506.cpp
+  2188C.cpp
+  2188D.cpp
+  2188D.cppg
+  2192A.cpp
+  2192B.cpp
+  2192C.cpp
+  2194A.cpp
+  2194B.cpp
+  2194C.cpp
+  2197B.cpp
+  2197D.cpp
+  A.cpp
+  Atcoder.cpp
+  B.cpp
+  C.cpp
+  C-pattern-purifier.cpp
+  D.cpp
+  dfs.py
+  exec
+  executable
+  forked.cpp
+  G-Pascals-Tree.cpp
+  n.c
+  sfsdfkj.cpp
+  sukhi.cpp
+  test.c
