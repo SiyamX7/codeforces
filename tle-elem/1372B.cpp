@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <numeric>
 using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
@@ -40,41 +41,47 @@ void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; stri
 
 const int INF = 4e18;
 const int MOD = 1e9+7;
-const int MAX = 300005;
-
-int a[MAX], dp[MAX];
+const int MAX = 200005;
 
 void solve(int _){
-	int n;
-	cin >> n;
-	
-	for(int i = 1; i <= n; i++) {
-		dp[i] = INF;
-	}
+    int n; 
+    cin >> n;
+    
+    if(n % 2 == 0){
+    	cout << n/2 << " " << n/2;
+    	return;
+    }
 
-	for(int i = 1; i <= n; i++){
-		cin >> a[i];
-		dp[a[i]] = 1;
-	}
+    vector<int> div;
+    for(int i = 2; i * i <= n; i++){
+    	if(n % i == 0){
+    		div.pb(i);
+    		if(i != n / i) div.pb(n/i);
+    	}
+    }
 
-	for(int i = 1; i <= n; i++){
-		for(int j = i; j <= n; j += i){
-			dp[j] = min( dp[j] , dp[i] + dp[j / i] );
-		}
-	}
+    vector<int> ans(2,0);
+    int res = INF;
 
-	for(int i = 1; i <= n; i++){
-		if(dp[i] == INF){
-			cout << -1 << " ";
-		} else {
-			cout << dp[i] << " ";
-		}
-	}
+    bool ok = 0;
+    for(int i = 0; i < sz(div); i++){
+    	int t = lcm(div[i] , n - div[i]);
+    	if(t < res){
+    		ans[0] = div[i];
+    		ans[1] = n - div[i];
+    		res = t;
+    		ok = 1;
+    	}
+    }
+
+    if(ok)
+    	cout << ans[0] << " " << ans[1];
+    else
+    	cout << 1 << " " << n-1;
 }
 
 signed main(){
     fast();
-
     int tc = 1; 
     cin >> tc;
     for(int t = 1; t <= tc ; t++){

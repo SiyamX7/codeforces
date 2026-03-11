@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <cstdlib>
 using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
@@ -40,46 +41,54 @@ void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; stri
 
 const int INF = 4e18;
 const int MOD = 1e9+7;
-const int MAX = 300005;
-
-int a[MAX], dp[MAX];
+const int MAX = 200005;
 
 void solve(int _){
-	int n;
-	cin >> n;
+    int n; 
+    cin >> n;
+    vector<int> a(n);
+    for(int i = 0; i < n; i++) cin >> a[i];
+
+    vector<int> ans;
 	
-	for(int i = 1; i <= n; i++) {
-		dp[i] = INF;
-	}
+	int l = 0, r = 1;
 
-	for(int i = 1; i <= n; i++){
-		cin >> a[i];
-		dp[a[i]] = 1;
-	}
+	ans.pb(a[0]);
 
-	for(int i = 1; i <= n; i++){
-		for(int j = i; j <= n; j += i){
-			dp[j] = min( dp[j] , dp[i] + dp[j / i] );
+	while(r < n){
+
+		if(a[r] > a[l]){
+
+			while(r < n && a[r] > a[l]) {
+				l++;
+				r++;
+			}
+
 		}
+
+		else {
+
+			while(r < n && a[r] < a[l]) {
+				l++;
+				r++;
+			}
+
+		}
+
+		ans.pb(a[r-1]);
+		
 	}
 
-	for(int i = 1; i <= n; i++){
-		if(dp[i] == INF){
-			cout << -1 << " ";
-		} else {
-			cout << dp[i] << " ";
-		}
-	}
+	cout << ans.size() << endl;
+	print(ans);
 }
 
 signed main(){
     fast();
-
     int tc = 1; 
     cin >> tc;
     for(int t = 1; t <= tc ; t++){
         solve(t);
-        cout << endl;
     }
 
     return 0;

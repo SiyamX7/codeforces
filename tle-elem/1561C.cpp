@@ -40,41 +40,57 @@ void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; stri
 
 const int INF = 4e18;
 const int MOD = 1e9+7;
-const int MAX = 300005;
+const int MAX = 200005;
 
-int a[MAX], dp[MAX];
+bool ok(int m, vector<pair<int,int>> &ans){
+
+	for(int i = 0; i < sz(ans); i++){
+		if(m >= ans[i].f){
+			m += ans[i].s;
+		} else {
+			return false;
+		}
+	}
+
+	return true;
+}
 
 void solve(int _){
-	int n;
-	cin >> n;
-	
-	for(int i = 1; i <= n; i++) {
-		dp[i] = INF;
-	}
+    int n; 
+    cin >> n;
+    
+    vector<pair<int,int>> ans(n);
 
-	for(int i = 1; i <= n; i++){
-		cin >> a[i];
-		dp[a[i]] = 1;
-	}
+    for(int i = 0; i < n; i++){
+    	int k;
+    	cin >> k;
 
-	for(int i = 1; i <= n; i++){
-		for(int j = i; j <= n; j += i){
-			dp[j] = min( dp[j] , dp[i] + dp[j / i] );
-		}
-	}
+    	int p = -INF;
+    	for(int j = 0; j < k; j++){
+    		int x;
+    		cin >> x;
 
-	for(int i = 1; i <= n; i++){
-		if(dp[i] == INF){
-			cout << -1 << " ";
-		} else {
-			cout << dp[i] << " ";
-		}
-	}
+    		p = max(x - j + 1 , p);
+    	}
+
+    	ans[i] = {p, k};
+    }
+
+    sort(all(ans));
+
+    int res = 0;
+    int killed = 0;
+
+    for(auto [req, cnt] : ans){
+    	res = max(res, req - killed);
+    	killed += cnt;
+    }
+
+    cout << res;
 }
 
 signed main(){
     fast();
-
     int tc = 1; 
     cin >> tc;
     for(int t = 1; t <= tc ; t++){

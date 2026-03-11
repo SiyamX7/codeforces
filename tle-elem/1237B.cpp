@@ -40,43 +40,40 @@ void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; stri
 
 const int INF = 4e18;
 const int MOD = 1e9+7;
-const int MAX = 300005;
-
-int a[MAX], dp[MAX];
+const int MAX = 200005;
 
 void solve(int _){
-	int n;
-	cin >> n;
-	
-	for(int i = 1; i <= n; i++) {
-		dp[i] = INF;
-	}
+    int n; 
+    cin >> n;
 
-	for(int i = 1; i <= n; i++){
-		cin >> a[i];
-		dp[a[i]] = 1;
-	}
+    vector<int> a(n+1), t(n+1);
+    for(int i = 1; i <= n; i++) {
+    	int x; cin >> x;
+    	a[x] = i;
+    }
 
-	for(int i = 1; i <= n; i++){
-		for(int j = i; j <= n; j += i){
-			dp[j] = min( dp[j] , dp[i] + dp[j / i] );
-		}
-	}
+    for(int i = 1; i <= n; i++){
+    	int x; cin >> x;
+    	t[a[x]] = i; 
+    }
 
-	for(int i = 1; i <= n; i++){
-		if(dp[i] == INF){
-			cout << -1 << " ";
-		} else {
-			cout << dp[i] << " ";
-		}
-	}
+    int mx = 0;
+    int cnt = 0;
+    for(int i = 1; i <= n; i++){
+    	if(t[i] < mx){
+    		cnt++;
+    	}
+
+    	mx = max(mx, t[i]);
+    }
+
+    cout << cnt;
 }
 
 signed main(){
     fast();
-
     int tc = 1; 
-    cin >> tc;
+    // cin >> tc;
     for(int t = 1; t <= tc ; t++){
         solve(t);
         cout << endl;
