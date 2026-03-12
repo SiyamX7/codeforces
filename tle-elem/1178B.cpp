@@ -43,39 +43,35 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    int n; 
-    cin >> n;
-    vector<int> freq(31,0);
+    string s;
+    cin >> s;
 
-    for(int i = 0; i < n; i++) {
-    	int x; cin >> x;
-    	int j = 0;
-    	while(x > 0){
-    		if(x & 1) {
-    			freq[j]++;
-    		}
+    int n = sz(s);
+    vector<int> pref(n), suff(n);
 
-    		x >>= 1;
-    		j++;
-    	}
+	for(int i = 1; i < n; i++){
+		pref[i] = pref[i-1] + (s[i] == s[i-1] && s[i] == 'v');
+	}    
+
+    for(int i = n-2; i >= 0; i--){
+        suff[i] = suff[i+1] + (s[i] == s[i+1] && s[i] == 'v');
     }
 
-    int ans = 0;
-    for(auto x : freq){
-    	ans = gcd(ans,x);
+	int ans = 0;
+
+    for(int i = 0; i < n; i++){
+        if(s[i] == 'o'){
+            ans += pref[i] * suff[i]; 
+        }
     }
 
-    for(int i = 1; i <= n; i++){
-    	if(ans % i == 0) {
-    		cout << i << " ";
-    	}
-    }
+    cout << ans;
 }
 
 signed main(){
     fast();
     int tc = 1; 
-    cin >> tc;
+    // cin >> tc;
     for(int t = 1; t <= tc ; t++){
         solve(t);
         cout << endl;

@@ -45,31 +45,28 @@ const int MAX = 200005;
 void solve(int _){
     int n; 
     cin >> n;
-    vector<int> freq(31,0);
 
-    for(int i = 0; i < n; i++) {
-    	int x; cin >> x;
-    	int j = 0;
-    	while(x > 0){
-    		if(x & 1) {
-    			freq[j]++;
-    		}
-
-    		x >>= 1;
-    		j++;
-    	}
+    if(n == 0) {
+    	cout << 0;
+    	return;
     }
+    vector<int> a(n);
+    for(int i = 0; i < n; i++) cin >> a[i];
 
-    int ans = 0;
-    for(auto x : freq){
-    	ans = gcd(ans,x);
-    }
+    int mx = 1;
+	int curr = 1;
 
-    for(int i = 1; i <= n; i++){
-    	if(ans % i == 0) {
-    		cout << i << " ";
-    	}
-    }
+	for(int i = 0; i+1 < n; i++){
+		if(a[i] < a[i+1]){
+			curr++;
+		} else {
+			curr = 1;
+		}
+
+		mx = max(mx,curr);
+	}
+
+	cout << mx;
 }
 
 signed main(){

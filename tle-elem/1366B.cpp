@@ -43,33 +43,23 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    int n; 
-    cin >> n;
-    vector<int> freq(31,0);
+    int n, x, m;
+    cin >> n >> x >> m;
 
-    for(int i = 0; i < n; i++) {
-    	int x; cin >> x;
-    	int j = 0;
-    	while(x > 0){
-    		if(x & 1) {
-    			freq[j]++;
-    		}
+    int L = x, R = x;
+    while(m--){
+    	int l, r;
+    	cin >> l >> r;
 
-    		x >>= 1;
-    		j++;
+    	if(r < L || R < l) {
+    		continue;
+    	} else {
+    		L = min(L,l);
+    		R = max(R,r);
     	}
     }
 
-    int ans = 0;
-    for(auto x : freq){
-    	ans = gcd(ans,x);
-    }
-
-    for(int i = 1; i <= n; i++){
-    	if(ans % i == 0) {
-    		cout << i << " ";
-    	}
-    }
+    cout << R - L + 1;
 }
 
 signed main(){
