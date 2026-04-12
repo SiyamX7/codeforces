@@ -42,19 +42,38 @@ const int INF = 4e18;
 const int MOD = 1e9+7;
 const int MAX = 200005;
 
+vector<vector<pair<int,int>>> g;
+int ans;
+
+void dfs(int curr, int par, int last, int mx){
+	ans = max(mx,ans);
+
+	for(auto [v, ind] : g[curr]){
+		if(v == par) continue;
+
+		int nmx = mx;
+		if(ind < last) nmx++;
+
+		dfs(v, curr, ind, nmx);
+	}
+}
+
 void solve(int _){
-    int n, m, a, b;
-    cin >> n >> m >> a >> b;
-
-    int x = __gcd(n,a);
-    int y = __gcd(m,b);
-    int z = __gcd(n,m);
-
-    if(x == 1 && y == 1 && z <= 2){
-        cout << "YES";
-    } else {
-        cout << "NO";
+    int n; 
+    cin >> n;
+    
+    g.assign(n+1, {});
+    for(int i = 1; i <= n-1; i++){
+    	int u,v;
+    	cin >> u >> v;
+    	g[u].pb({v,i});
+    	g[v].pb({u,i});
     }
+
+    ans = 1;
+    dfs(1,0,0,1);
+
+    cout << ans;
 }
 
 signed main(){

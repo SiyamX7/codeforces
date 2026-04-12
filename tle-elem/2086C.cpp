@@ -43,17 +43,24 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    int n, m, a, b;
-    cin >> n >> m >> a >> b;
+    int n; 
+    cin >> n;
+    
+    vector<int> p(n+1);
+    for(int i = 0; i < n; i++) cin >> p[i+1];
 
-    int x = __gcd(n,a);
-    int y = __gcd(m,b);
-    int z = __gcd(n,m);
+    set<int> s;
 
-    if(x == 1 && y == 1 && z <= 2){
-        cout << "YES";
-    } else {
-        cout << "NO";
+    for(int i = 1; i <= n; i++){
+        int d; 
+        cin >> d;
+
+        while(!s.count(d)){
+            s.insert(d);
+            d = p[d];
+        }
+        
+        cout << s.size() << " ";
     }
 }
 

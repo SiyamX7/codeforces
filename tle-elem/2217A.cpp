@@ -43,17 +43,17 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    int n, m, a, b;
-    cin >> n >> m >> a >> b;
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
 
-    int x = __gcd(n,a);
-    int y = __gcd(m,b);
-    int z = __gcd(n,m);
+    int sum = 0;
+    for(int i = 0; i < n; i++) cin >> a[i], sum += a[i];
 
-    if(x == 1 && y == 1 && z <= 2){
-        cout << "YES";
+    if(sum % 2 == 1 || (n*k % 2 == 0)){
+    	cout << "YES";
     } else {
-        cout << "NO";
+    	cout << "NO";
     }
 }
 

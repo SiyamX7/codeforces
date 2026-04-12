@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <numeric>
 using namespace std;
 
 static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
@@ -16,7 +17,7 @@ static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
 #define test cout << "Test #" << _ << ":\n"
 #define pb push_back
 #define eb emplace_back
-#define f first
+// #define f first
 #define s second
 
 /* ================= UTILS ================= */
@@ -43,18 +44,28 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    int n, m, a, b;
-    cin >> n >> m >> a >> b;
+    int n; 
+    cin >> n;
+    vector<int> a(n+1), pref(n+1);
 
-    int x = __gcd(n,a);
-    int y = __gcd(m,b);
-    int z = __gcd(n,m);
-
-    if(x == 1 && y == 1 && z <= 2){
-        cout << "YES";
-    } else {
-        cout << "NO";
+    for(int i = 1; i <= n; i++){
+    	cin >> a[i];
+    	pref[i] = pref[i-1] + a[i];
     }
+
+	auto f = [&](int x){
+		return 1LL * x * x + x - pref[x];
+	};
+
+	int mn = f(0); // f(l-1) = f(1-1) = f(0)
+	int gain = 0;
+
+	for(int r = 1; r <= n; r++){
+		gain = max(gain, f(r) - mn);
+		mn = min(mn, f(r));
+	}	
+
+	cout << pref[n] + gain;
 }
 
 signed main(){

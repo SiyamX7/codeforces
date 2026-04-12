@@ -40,20 +40,32 @@ void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; stri
 
 const int INF = 4e18;
 const int MOD = 1e9+7;
-const int MAX = 200005;
+const int MAX = 100005;
 
 void solve(int _){
-    int n, m, a, b;
-    cin >> n >> m >> a >> b;
+    int n, m;
+    cin >> n >> m;
+    
+    vector<vector<pair<int,int>>> a(MAX);
 
-    int x = __gcd(n,a);
-    int y = __gcd(m,b);
-    int z = __gcd(n,m);
+    for(int i = 0; i < n; i++) {
+    	for(int j = 0; j < m; j++){
+    		
+    		int x;
+    		cin >> x;
 
-    if(x == 1 && y == 1 && z <= 2){
-        cout << "YES";
-    } else {
-        cout << "NO";
+    		a[x].pb({i,j});
+    	}
+    }
+
+    for(int i = 0; i < MAX; i++){
+        sort(all(a[i]));
+    }
+    
+    for(int i = 0; i < MAX; i++){
+        for(auto p : a[i]){
+            cout << p.first << " " << p.second << endl;
+        }
     }
 }
 

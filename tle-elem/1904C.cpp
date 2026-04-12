@@ -43,18 +43,50 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    int n, m, a, b;
-    cin >> n >> m >> a >> b;
+    int n, k; 
+    cin >> n >> k;
+    vector<int> a(n);
+    for(int i = 0; i < n; i++) cin >> a[i];
 
-    int x = __gcd(n,a);
-    int y = __gcd(m,b);
-    int z = __gcd(n,m);
-
-    if(x == 1 && y == 1 && z <= 2){
-        cout << "YES";
-    } else {
-        cout << "NO";
+    if(k >= 3){
+    	cout << 0;
+    	return;
     }
+
+    sort(all(a));
+	int ans = a[0];
+
+	if(k == 1){
+		
+		for(int i = 0; i + 1 < n; i++) {
+			ans = min(ans, a[i+1] - a[i]);
+		}
+
+	} else if(k == 2){
+
+		for(int i = 0; i < n; i++){
+			for(int j = i + 1; j < n; j++){
+
+				int x = llabs(a[j] - a[i]);
+				ans = min(ans, x);
+
+				auto it = lower_bound(all(a) , x);
+
+				if(it != a.end()) {
+					ans = min(ans, *it - x);
+				}
+
+				if(it != a.begin()){
+					--it;
+					ans = min(ans, x - *it);
+				}
+
+			}
+		}
+
+	}
+	
+	cout << ans;
 }
 
 signed main(){
@@ -68,4 +100,3 @@ signed main(){
 
     return 0;
 }
-    

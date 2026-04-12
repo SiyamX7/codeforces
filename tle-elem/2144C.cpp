@@ -39,22 +39,28 @@ i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,
 void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
 
 const int INF = 4e18;
-const int MOD = 1e9+7;
+const int MOD = 998244353;
 const int MAX = 200005;
 
 void solve(int _){
-    int n, m, a, b;
-    cin >> n >> m >> a >> b;
+    int n; 
+    cin >> n;
+    vector<int> a(n), b(n);
+    for(int i = 0; i < n; i++) cin >> a[i];
+    for(int i = 0; i < n; i++) cin >> b[i];
 
-    int x = __gcd(n,a);
-    int y = __gcd(m,b);
-    int z = __gcd(n,m);
-
-    if(x == 1 && y == 1 && z <= 2){
-        cout << "YES";
-    } else {
-        cout << "NO";
+    for(int i = 0; i < n; i++){
+    	if(a[i] > b[i]) swap(a[i], b[i]);
     }
+
+    int ans = 1;
+    for(int i = 0; i < n; i++){
+    	if(i == n-1 || b[i] <= a[i+1]){
+    		ans = (ans * 2LL) % MOD;
+    	}
+    }
+
+    cout << ans;
 }
 
 signed main(){

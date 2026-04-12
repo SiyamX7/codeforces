@@ -42,25 +42,32 @@ const int INF = 4e18;
 const int MOD = 1e9+7;
 const int MAX = 200005;
 
-void solve(int _){
-    int n, m, a, b;
-    cin >> n >> m >> a >> b;
-
-    int x = __gcd(n,a);
-    int y = __gcd(m,b);
-    int z = __gcd(n,m);
-
-    if(x == 1 && y == 1 && z <= 2){
+void solve(int _ ){
+    int n;
+    cin >> n;
+    if (n == 1){
+        cout << "DRIVE";
+    } else if (n == 2){
         cout << "YES";
-    } else {
-        cout << "NO";
+    } else if(n == 3){
+        cout << "YES";
+    } else if(n == 4){
+        cout << "YES";
+    } else if(n == 5){
+        cout << "YES";
+    } else if(n == 6){
+        cout << "YES";
+    } else if (n == 7){
+        cout << "ABBA";
+    } else if(n == 8){
+        cout << 8;
     }
 }
 
 signed main(){
     fast();
     int tc = 1; 
-    cin >> tc;
+    // cin >> tc;
     for(int t = 1; t <= tc ; t++){
         solve(t);
         cout << endl;
