@@ -45,46 +45,17 @@ const int MAX = 200005;
 void solve(int _){
     int n; 
     cin >> n;
-    vector<char> a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
+    
+    vector<int> a(n), b(n), s(n+1), t(n+1);
+    for(int i = 0; i < n; i++) cin >> a[i];    
+    for(int i = 0; i < n; i++) cin >> b[i];
 
-    if(n == 1){
-        cout << a[0];
-        return;
-    }
+	for(int i = 1; i <= n; i++){
+		s[i] = max(s[i-1], t[i-1] + a[i-1]);
+		t[i] = max(t[i-1], s[i-1] + b[i-1]);
+	}
 
-    int l = 0, r = n-1;
-    while(l < r){
-        if(a[l] < a[r]){
-            cout << a[l];
-            l++;
-        } else if(a[l] > a[r]){
-            cout << a[r];
-            r--;
-        } else {
-            int count = 0;
-            char g = a[l];
-            int x = l, y = r;
-
-            while(x < y && a[x] == g && a[x] == a[y]){
-                x++, y--;
-                count++;
-            }
-
-            for(int i = 0; i < count; i++){
-                cout << a[x-1];
-            }
-            if(a[x] < a[y]){
-                l = x;
-            } else {
-                r = y;
-            }
-        }
-
-        if(l == r){
-            cout << a[l];
-        }
-    }
+	cout << max(s[n], t[n]);
 }
 
 signed main(){

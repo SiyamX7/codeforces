@@ -43,48 +43,35 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    int n; 
-    cin >> n;
-    vector<char> a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
-
-    if(n == 1){
-        cout << a[0];
-        return;
+    int k , x;
+    cin >> k >> x;
+    int mul = 1, cnt = 0;
+    int ans = 0;
+    for(int i = 0; i < x; i++)
+    {
+      int a1 = mul * k;
+      int a2 = 10 * cnt + k;
+      if(a1 == a2)
+      {
+        ans = a1;
+        mul++;
+        cnt++;
+      }
+      else if(a1 < a2)
+      {
+        ans = a1;
+        mul++;
+      }
+      else
+      {
+        ans = a2;
+        cnt++;
+      }
+      cout << ans;
     }
 
-    int l = 0, r = n-1;
-    while(l < r){
-        if(a[l] < a[r]){
-            cout << a[l];
-            l++;
-        } else if(a[l] > a[r]){
-            cout << a[r];
-            r--;
-        } else {
-            int count = 0;
-            char g = a[l];
-            int x = l, y = r;
 
-            while(x < y && a[x] == g && a[x] == a[y]){
-                x++, y--;
-                count++;
-            }
-
-            for(int i = 0; i < count; i++){
-                cout << a[x-1];
-            }
-            if(a[x] < a[y]){
-                l = x;
-            } else {
-                r = y;
-            }
-        }
-
-        if(l == r){
-            cout << a[l];
-        }
-    }
+    
 }
 
 signed main(){
