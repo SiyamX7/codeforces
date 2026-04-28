@@ -1,101 +1,71 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-static inline void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); }
+const long long INF = 1e18;
 
-#define int long long
-#define i128 __int128_t
-#define u128 __uint128_t
-#define all(x) (x).begin(), (x).end()
-#define rall(x) (x).rbegin(), (x).rend()
-#define sz(x) (int)(x).size()
-#define popcount(x) __builtin_popcountll(x)
-#define clz(x) __builtin_clzll(x)
-#define ctz(x) __builtin_ctzll(x)
-#define endl '\n'
-#define test cout << "Test #" << _ << ":\n"
-#define pb push_back
-#define eb emplace_back
-#define f first
-#define s second
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-/* ================= UTILS ================= */
-template<class T> void uniq(vector<T>&v){ sort(all(v)); v.erase(unique(all(v)),v.end()); }
-template<class T> void remVAL(vector<T>&v,T x){ v.erase(remove(all(v),x),v.end()); }
-template<class T> void remID(vector<T>&v,int i){ if(i>=0 && i<sz(v)) v.erase(v.begin()+i); }
-template<class T> void rot(vector<T>&v,int k){ if(v.empty()) return; k%=sz(v); rotate(v.begin(),v.begin()+k,v.end()); }
+    int T;
+    cin >> T;
 
-/* ================= PRINT ================= */
-template<class T> void print(const T&x){ cout<<x<<'\n'; }
-template<class A,class B> void print(const pair<A,B>&p){ cout<<p.f<<" "<<p.s<<'\n'; }
-template<class T> void print(const vector<T>&v){ for(auto &x:v) cout<<x<<" "; cout<<'\n'; }
-template<class A,class B> void print(const vector<pair<A,B>>&v){ for(auto &p:v) cout<<p.f<<" "<<p.s<<'\n'; }
-template<class T> void print(const set<T>&s){ for(auto &x:s) cout<<x<<" "; cout<<'\n'; }
-template<class K,class V> void print(const map<K,V>&m){ for(auto &p:m) cout<<p.f<<" : "<<p.s<<'\n'; }
-template<class T> void print(const vector<vector<T>>&v){ for(auto &r:v){ for(auto &x:r) cout<<x<<" "; cout<<'\n'; } }
+    while (T--) {
+        long long n, k;
+        cin >> n >> k;
 
-/* ================= i128 IO ================= */
-i128 read_i128(){ string s; cin>>s; i128 x=0; int i=0,sg=1; if(s[0]=='-') sg=-1,i=1; for(;i<sz(s);i++) x=x*10+(s[i]-'0'); return x*sg; }
-void print(i128 x){ if(x==0){cout<<0<<'\n';return;} if(x<0) cout<<"-",x=-x; string s; while(x){s.pb('0'+x%10);x/=10;} reverse(all(s)); cout<<s<<'\n'; }
+        k %= 2;   // only parity matters
 
-const int INF = 4e18;
-const int MOD = 1e9+7;
-const int MAX = 200005;
+        vector<long long> a(n), b(n);
+        for (int i = 0; i < n; i++) cin >> a[i];
+        for (int i = 0; i < n; i++) cin >> b[i];
 
-void solve(int _){
-    int n; 
-    cin >> n;
-    vector<char> a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
+        vector<long long> prefixSum(n + 1);
+        prefixSum[0] = 0;
 
-    if(n == 1){
-        cout << a[0];
-        return;
-    }
-
-    int l = 0, r = n-1;
-    while(l < r){
-        if(a[l] < a[r]){
-            cout << a[l];
-            l++;
-        } else if(a[l] > a[r]){
-            cout << a[r];
-            r--;
-        } else {
-            int count = 0;
-            char g = a[l];
-            int x = l, y = r;
-
-            while(x < y && a[x] == g && a[x] == a[y]){
-                x++, y--;
-                count++;
-            }
-
-            for(int i = 0; i < count; i++){
-                cout << a[x-1];
-            }
-            if(a[x] < a[y]){
-                l = x;
-            } else {
-                r = y;
-            }
+        for (int i = 0; i < n; i++) {
+            prefixSum[i + 1] = prefixSum[i] + a[i];
         }
 
-        if(l == r){
-            cout << a[l];
-        }
-    }
-}
+        vector<long long> minPrefix(n + 1);
+        vector<long long> maxSuffix(n + 1);
 
-signed main(){
-    fast();
-    int tc = 1; 
-    // cin >> tc;
-    for(int t = 1; t <= tc ; t++){
-        solve(t);
+        for (int i = 0; i <= n; i++) {
+            minPrefix[i] = prefixSum[i];
+            maxSuffix[i] = prefixSum[i];
+        }
+
+        for(int i = 0; i <= n; i++){
+            cout << prefixSum[i] << " ";
+        }
         cout << endl;
-    }
 
-    return 0;
+        // compute minimum prefix
+        for (int i = 1; i <= n; i++) {
+            minPrefix[i] = min(minPrefix[i], minPrefix[i - 1]);
+            cout << minPrefix[i] << " ";
+        }
+        cout << endl;
+
+        // compute maximum suffix
+        for (int i = n - 1; i >= 0; i--) {
+            maxSuffix[i] = max(maxSuffix[i], maxSuffix[i + 1]);
+            cout << maxSuffix[i] << " ";
+        }
+        cout << endl;
+
+        long long ans = -INF;
+
+        for (int i = 0; i < n; i++) {
+            long long bestSubarrayThroughI =
+                maxSuffix[i + 1] - minPrefix[i];
+
+            long long candidate =
+                bestSubarrayThroughI + b[i] * k;
+
+            ans = max(ans, candidate);
+        }
+
+        cout << "\n";
+    }
 }
-    

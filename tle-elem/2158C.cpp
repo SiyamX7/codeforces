@@ -43,10 +43,40 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    int n, m;
-    cin >> n >> m;
-    vector<int> a(n);
+    int n, k;
+    cin >> n >> k;
+    
+    vector<int> a(n), b(n), pref(n+1), mnpref(n+1), mxsuf(n+1);
+
     for(int i = 0; i < n; i++) cin >> a[i];
+    for(int i = 0; i < n; i++) cin >> b[i];
+
+    for(int i = 0; i < n; i++){
+    	pref[i+1] = pref[i] + a[i];
+    }
+
+    for(int i = 0; i <= n; i++){
+    	mxsuf[i] = pref[i];
+    	mnpref[i] = pref[i];
+    }
+
+    for(int i = 1; i <= n; i++){
+    	mnpref[i] = min(mnpref[i-1], mnpref[i]); 
+    }
+
+    for(int i = n-1; i >= 0; i--){
+    	mxsuf[i] = max(mxsuf[i+1], mxsuf[i]);
+    }
+
+    int ans = -INF;
+
+    k &= 1;
+    for(int i = 0; i < n; i++){
+    	int mx = mxsuf[i+1] - mnpref[i];
+    	ans = max(ans, k * b[i] + mx);
+    }
+
+    cout << ans;
 }
 
 signed main(){
@@ -60,4 +90,3 @@ signed main(){
 
     return 0;
 }
-    
