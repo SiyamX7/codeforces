@@ -43,10 +43,18 @@ const int MOD = 1e9+7;
 const int MAX = 200005;
 
 void solve(int _){
-    int n; 
-    cin >> n;
-    vector<int> a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
+    vector<int> v(6);
+    for(int i = 0; i < 6; i++) cin >> v[i];
+
+    int sum = 0;
+    if(v[0] == 0 && v[1] == 0) sum += 0;
+    else sum += v[1] - v[0] + 1;
+    if(v[2] == 0 && v[3] == 0) sum += 0;
+    else sum += v[3] - v[2] + 1;    
+    if(v[4] == 0 && v[5] == 0) sum += 0;
+    else sum += v[5] - v[4] + 1;
+
+    cout << sum;
 }
 
 signed main(){
